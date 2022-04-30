@@ -1,3 +1,3 @@
-export default interface AccountModel {
+export interface AccountModel {
     accessToken: string
 }
