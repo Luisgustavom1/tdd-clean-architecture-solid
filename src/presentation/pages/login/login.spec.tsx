@@ -4,6 +4,9 @@ import Login from './login'
 
 describe('<Login />', () => {
     it('', () => {
-        render(<Login />) 
+        const { getByTestId } = render(<Login />)
+        const errorWrap = getByTestId('status-wrap')
+
+        expect(errorWrap.childElementCount).toBe(0)
     })
 })
