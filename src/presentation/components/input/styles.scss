@@ -1,0 +1,10 @@
+@import "../../styles/color.scss";
+
+.errorMessage {
+    color: $primaryDark;
+    text-align: left;
+    display: flex;
+    width: 100%;
+    margin-bottom: 16px;
+    margin-top: 4px;
+}

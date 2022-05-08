@@ -1,39 +1,9 @@
 @import '../../styles/color.scss';
 
-input[type='password'],
-input[type='email'] {
-    border: 1px solid $primaryLight;
-    line-height: 40px;
-    border-radius: 6px;
-    width: 100%;
-    padding: 0 12px;
-
-    &:focus {
-        outline-color: $primaryLight;
-    }
-}
-
 .login {
     display: flex;
     flex-direction: column;
     height: 100vh;
-
-    .header {
-        background-color: $primary;
-
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-
-        border-top: $spacing-lg solid $primaryDark;
-
-        padding: $spacing-lg 0;
-
-        .headerTitle {
-            color: $white;
-            margin-top: 16px;
-        }
-    }
 
     .form {
         display: flex;
@@ -59,18 +29,5 @@ input[type='email'] {
         place-items: center;
         gap: 12px;
         margin-top: 24px;
-    }
-
-    .errorMessage {
-        color: $primaryDark;
-        text-align: left;
-        display: flex;
-        width: 100%;
-        margin-bottom: 16px;
-        margin-top: 4px;
-    }
-
-    .footer {
-        background-color: $primary;
     }
 }

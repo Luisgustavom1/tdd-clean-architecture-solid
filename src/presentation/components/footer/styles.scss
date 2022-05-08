@@ -1,0 +1,11 @@
+@import '../../styles/color.scss';
+
+.footer {
+    background-color: $primary;
+
+    width: 100vw;
+    padding: 12px 0;
+
+    position: absolute;
+    bottom: 0;
+}
