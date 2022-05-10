@@ -1,5 +1,11 @@
 import React from "react";
 
-import { StateErrorsProps } from "@/presentation/pages/login/login";
+import { StateErrorsProps, ValuesProps } from "@/presentation/pages/login/login";
 
-export default React.createContext<StateErrorsProps>(null);
+interface ContextData {
+    stateErrors: StateErrorsProps,
+    values: ValuesProps,
+    setValues: (data: ValuesProps) => void
+}
+
+export default React.createContext<ContextData>(null);
