@@ -1,3 +1,5 @@
 import React from "react";
 
-export default React.createContext(null);
+import { StateErrorsProps } from "@/presentation/pages/login/login";
+
+export default React.createContext<StateErrorsProps>(null);
