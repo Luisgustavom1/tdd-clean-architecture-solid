@@ -25,9 +25,9 @@ type LoginProps = {
 }
 
 const Login = ({ validation }: LoginProps) => {
-    const [stateErrors] = React.useState<StateErrorsProps>({
-        email: 'Email obrigatório',
-        password: 'Password obrigatório'
+    const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
+        email: '',
+        password: ''
     })
     const [isLoading] = React.useState(false)
     const [values, setValues] = React.useState<ValuesProps>({
@@ -35,12 +35,18 @@ const Login = ({ validation }: LoginProps) => {
         password: ''
     })
     React.useEffect(() => {
-        validation.validate('email', values.email)
-    }, [values.email])
+        setStateErrors({
+            ...stateErrors,
+            email: validation.validate('email', values.email)
+        })
+    }, [values.email, stateErrors.password])
 
     React.useEffect(() => {
-        validation.validate('password', values.password)
-    }, [values.password])
+        setStateErrors({
+            ...stateErrors,
+            password: validation.validate('password', values.password)  
+        })
+    }, [values.password, stateErrors.email])
     return (
         <div className={Styles.login}>
             <Header />
