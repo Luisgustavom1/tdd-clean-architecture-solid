@@ -51,4 +51,22 @@ describe('<Login />', () => {
         const passwordError = sut.getByTestId('password-error')
         expect(passwordError.textContent).toBe(validationStub.errorMessage)
     })
+
+    it('Should show valid email state if Validation success', () => {
+        const { sut, validationStub } = makeSut();
+        validationStub.errorMessage = null
+        const emailInput = sut.getByTestId('email')
+        fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
+        const emailError = sut.getByTestId('email-error')
+        expect(emailError.textContent).toBe('')
+    })
+
+    it('Should show valid password state if Validation success', () => {
+        const { sut, validationStub } = makeSut();
+        validationStub.errorMessage = null
+        const passwordInput = sut.getByTestId('password')
+        fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+        const passwordError = sut.getByTestId('password-error')
+        expect(passwordError.textContent).toBe('')
+    })
 })
