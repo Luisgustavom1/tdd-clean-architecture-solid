@@ -37,16 +37,11 @@ const Login = ({ validation }: LoginProps) => {
     React.useEffect(() => {
         setStateErrors({
             ...stateErrors,
-            email: validation.validate('email', values.email)
+            email: validation.validate('email', values.email),
+            password: validation.validate('password', values.password)
         })
-    }, [values.email, stateErrors.password])
+    }, [values.email, values.password])
 
-    React.useEffect(() => {
-        setStateErrors({
-            ...stateErrors,
-            password: validation.validate('password', values.password)  
-        })
-    }, [values.password, stateErrors.email])
     return (
         <div className={Styles.login}>
             <Header />
