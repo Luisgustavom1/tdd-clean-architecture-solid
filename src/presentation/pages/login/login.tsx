@@ -9,6 +9,7 @@ import Context from '@/presentation/contexts/form/form-context';
 
 import Styles from './login-style.scss'
 import { Validation } from '@/presentation/protocols/validations'
+import { Authentication } from '@/domain/usecases'
 
 type StateErrorsProps = {
     email: string,
@@ -22,9 +23,10 @@ type ValuesProps = {
 
 type LoginProps = {
     validation: Validation
+    authentication: Authentication
 }
 
-const Login = ({ validation }: LoginProps) => {
+const Login = ({ validation, authentication }: LoginProps) => {
     const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
         email: '',
         password: ''
@@ -34,9 +36,10 @@ const Login = ({ validation }: LoginProps) => {
         email: '',
         password: ''
     })
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLoading(true)
+        await authentication.auth({ ...values })
     }
     React.useEffect(() => {
         setStateErrors({
