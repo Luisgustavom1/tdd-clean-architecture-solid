@@ -29,11 +29,15 @@ const Login = ({ validation }: LoginProps) => {
         email: '',
         password: ''
     })
-    const [isLoading] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(false)
     const [values, setValues] = React.useState<ValuesProps>({
         email: '',
         password: ''
     })
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setIsLoading(true)
+    }
     React.useEffect(() => {
         setStateErrors({
             ...stateErrors,
@@ -47,7 +51,7 @@ const Login = ({ validation }: LoginProps) => {
             <Header />
 
             <Context.Provider value={{ stateErrors, values, setValues }}>
-                <form className={Styles.form}>
+                <form onSubmit={handleSubmit} className={Styles.form}>
                     <h2 className={Styles.formHeader}>Login</h2>
                     <Input type='email' name='email' placeholder='Digite seu e-mail' />
                     <Input type='password' name='password' placeholder='Digite sua senha' />
