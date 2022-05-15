@@ -52,7 +52,7 @@ const Login = ({ validation }: LoginProps) => {
                     <Input type='email' name='email' placeholder='Digite seu e-mail' />
                     <Input type='password' name='password' placeholder='Digite sua senha' />
                     <div className={Styles.buttonContainer}>
-                        <Button data-testid='submit-form' variant='filled' disabled type='submit'>Entrar</Button>
+                        <Button data-testid='submit-form' variant='filled' disabled={!!(stateErrors.email || stateErrors.password)} type='submit'>Entrar</Button>
                         <span data-testid='status-wrap'>
                             {isLoading && <Spinner />}
                         </span>
