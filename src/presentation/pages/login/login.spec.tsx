@@ -3,20 +3,7 @@ import faker from '@faker-js/faker'
 import { fireEvent, render, RenderResult, cleanup } from '@testing-library/react'
 import Login from './login'
 import ValidationStub from '@/presentation/test/mock-validation'
-import { Authentication, AuthenticationParams } from '@/domain/usecases'
-import { AccountModel } from '@/domain/model'
-import { mockAccountModel } from '@/domain/test'
-
-class AuthenticationSpy implements Authentication {
-    account = mockAccountModel()
-    params: AuthenticationParams
-
-    auth(params: AuthenticationParams): Promise<AccountModel> {
-        this.params = params
-        return Promise.resolve(this.account)
-    }
-
-}
+import AuthenticationSpy from '@/presentation/test/mock-authentication'
 
 type SutTypes = {
     sut: RenderResult
