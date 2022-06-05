@@ -31,6 +31,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
         email: '',
         password: ''
     })
+    const [mainError, setMainError] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false)
     const [values, setValues] = React.useState<ValuesProps>({
         email: '',
@@ -38,11 +39,16 @@ const Login = ({ validation, authentication }: LoginProps) => {
     })
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (isLoading || stateErrors.email || stateErrors.password) {
-            return
+        try {
+            if (isLoading || stateErrors.email || stateErrors.password) {
+                return
+            }
+            setIsLoading(true)
+            await authentication.auth({ ...values })
+        } catch (error) {
+            setIsLoading(false)
+            setMainError(error.message)
         }
-        setIsLoading(true)
-        await authentication.auth({ ...values })
     }
     React.useEffect(() => {
         setStateErrors({
@@ -65,6 +71,9 @@ const Login = ({ validation, authentication }: LoginProps) => {
                         <Button data-testid='submit-form' variant='filled' disabled={!!(stateErrors.email || stateErrors.password)} type='submit'>Entrar</Button>
                         <span data-testid='status-wrap'>
                             {isLoading && <Spinner />}
+                            {mainError && <div data-testid='main-error'>
+                                {mainError}
+                            </div>}
                         </span>
                         <Button variant='outlined'>Criar conta</Button>
                     </div>
