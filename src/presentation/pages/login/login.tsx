@@ -38,7 +38,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
     })
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (isLoading) {
+        if (isLoading || stateErrors.email || stateErrors.password) {
             return
         }
         setIsLoading(true)
@@ -57,7 +57,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
             <Header />
 
             <Context.Provider value={{ stateErrors, values, setValues }}>
-                <form onSubmit={handleSubmit} className={Styles.form}>
+                <form data-testid='form' onSubmit={handleSubmit} className={Styles.form}>
                     <h2 className={Styles.formHeader}>Login</h2>
                     <Input type='email' name='email' placeholder='Digite seu e-mail' />
                     <Input type='password' name='password' placeholder='Digite sua senha' />
