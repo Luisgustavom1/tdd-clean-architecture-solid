@@ -10,6 +10,7 @@ import Context from '@/presentation/contexts/form/form-context';
 import Styles from './login-style.scss'
 import { Validation } from '@/presentation/protocols/validations'
 import { Authentication } from '@/domain/usecases'
+import { Link } from 'react-router-dom'
 
 type StateErrorsProps = {
     email: string,
@@ -76,7 +77,9 @@ const Login = ({ validation, authentication }: LoginProps) => {
                                 {mainError}
                             </div>}
                         </span>
-                        <Button variant='outlined'>Criar conta</Button>
+                        <Link to='/signup'>
+                            <Button variant='outlined'>Criar conta</Button>
+                        </Link>
                     </div>
                 </form>
             </Context.Provider>
