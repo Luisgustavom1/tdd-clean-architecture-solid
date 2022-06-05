@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
 import Button from '@/presentation/components/button'
 import Footer from '@/presentation/components/footer'
@@ -10,7 +11,6 @@ import Context from '@/presentation/contexts/form/form-context';
 import Styles from './login-style.scss'
 import { Validation } from '@/presentation/protocols/validations'
 import { Authentication } from '@/domain/usecases'
-import { Link } from 'react-router-dom'
 
 type StateErrorsProps = {
     email: string,
@@ -28,6 +28,7 @@ type LoginProps = {
 }
 
 const Login = ({ validation, authentication }: LoginProps) => {
+    const history = useHistory();
     const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
         email: '',
         password: ''
@@ -47,6 +48,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
             setIsLoading(true)
             const account = await authentication.auth({ ...values })
             localStorage.setItem('accessToken', account.accessToken)
+            history.replace('/')
         } catch (error) {
             setIsLoading(false)
             setMainError(error.message)
