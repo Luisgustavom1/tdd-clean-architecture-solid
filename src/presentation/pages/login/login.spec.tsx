@@ -33,11 +33,12 @@ const makeSut = (params?: SutParams): SutTypes => {
     return { sut, authenticationSpy }
 }
 
-const simulateValidSubmit = (sut: RenderResult, email = faker.internet.email(), password = faker.internet.password()) => {
+const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
     populatePasswordField(sut, password)
     populateEmailField(sut, email)
-    const submitButton = sut.getByTestId('submit-form')
-    fireEvent.click(submitButton)
+    const form = sut.getByTestId('form');
+    fireEvent.submit(form)
+    await waitFor(() => form)
 }
 
 const populateEmailField = (sut: RenderResult, email = faker.internet.email()) => {
@@ -55,6 +56,16 @@ const simulateErrorForField = (sut: RenderResult, fieldName: string, validationE
     expect(emailError.textContent).toBe(validationError || '')
 }
 
+const testErrorWrapChildCount = (sut: RenderResult, count: number) => {
+    const errorWrap = sut.getByTestId('status-wrap')
+    expect(errorWrap.childElementCount).toBe(count)
+}
+
+const testElementExists = (sut: RenderResult, fieldName: string) => {
+    const element = sut.getByTestId(fieldName)
+    expect(element).toBeTruthy()
+}
+
 describe('<Login />', () => {
     afterEach(cleanup)
     beforeEach(() => {
@@ -65,8 +76,7 @@ describe('<Login />', () => {
         const validationError = faker.random.words()
         const { sut } = makeSut({ validationError })
 
-        const errorWrap = sut.getByTestId('status-wrap')
-        expect(errorWrap.childElementCount).toBe(0)
+        testErrorWrapChildCount(sut, 0)
 
         simulateErrorForField(sut, 'email', validationError)
         simulateErrorForField(sut, 'password', validationError)
@@ -109,36 +119,34 @@ describe('<Login />', () => {
         expect(submitButton.disabled).toBe(false)
     })
 
-    it('Should show spinner on submit', () => {
+    it('Should show spinner on submit', async () => {
         const { sut } = makeSut();
-        simulateValidSubmit(sut)
-        const spinnerElement = sut.getByTestId('spinner')
-        expect(spinnerElement).toBeTruthy()
+        await simulateValidSubmit(sut)
+        testElementExists(sut, 'spinner')
     })
 
-    it('Should call Authentication with correct values', () => {
+    it('Should call Authentication with correct values', async () => {
         const { sut, authenticationSpy } = makeSut();
         const email = faker.internet.email()
         const password = faker.internet.password()
-        simulateValidSubmit(sut, email, password);
+        await simulateValidSubmit(sut, email, password);
         expect(authenticationSpy.params).toEqual({
             email,
             password
         })
     })
 
-    it('Should call Authentication only once', () => {
+    it('Should call Authentication only once', async () => {
         const { authenticationSpy, sut } = makeSut();
-        simulateValidSubmit(sut);
-        simulateValidSubmit(sut);
+        await simulateValidSubmit(sut);
+        await simulateValidSubmit(sut);
         expect(authenticationSpy.callsCount).toBe(1)
     })
 
-    it('Should not call Authentication it form is invalid', () => {
+    it('Should not call Authentication it form is invalid', async () => {
         const validationError = faker.random.words()
         const { sut, authenticationSpy } = makeSut({ validationError })
-        populateEmailField(sut)
-        fireEvent.submit(sut.getByTestId('form'))
+        await simulateValidSubmit(sut)
         expect(authenticationSpy.callsCount).toBe(0)
     })
 
@@ -146,7 +154,7 @@ describe('<Login />', () => {
         const { sut, authenticationSpy } = makeSut()
         const error = new InvalidCredentialsError()
         jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
-        simulateValidSubmit(sut)
+        await simulateValidSubmit(sut)
         const mainError = await sut.findByTestId('main-error')
         expect(mainError?.textContent).toBe(error.message)
         expect(sut.queryByTestId('spinner')).toBeNull()
@@ -154,8 +162,7 @@ describe('<Login />', () => {
 
     it('Should add accessToken to localstorage on success', async () => {
         const { sut, authenticationSpy } = makeSut()
-        simulateValidSubmit(sut)
-        await waitFor(() => sut.getByTestId('form'))
+        await simulateValidSubmit(sut)
         expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
         expect(history.length).toBe(1)
         expect(history.location.pathname).toBe('/')
