@@ -44,7 +44,8 @@ const Login = ({ validation, authentication }: LoginProps) => {
                 return
             }
             setIsLoading(true)
-            await authentication.auth({ ...values })
+            const account = await authentication.auth({ ...values })
+            localStorage.setItem('accessToken', account.accessToken)
         } catch (error) {
             setIsLoading(false)
             setMainError(error.message)

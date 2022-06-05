@@ -6,6 +6,8 @@ import ValidationStub from '@/presentation/test/mock-validation'
 import AuthenticationSpy from '@/presentation/test/mock-authentication'
 import { InvalidCredentialsError } from '@/domain/errors'
 
+import 'jest-localstorage-mock'
+
 type SutTypes = {
     sut: RenderResult
     authenticationSpy: AuthenticationSpy
@@ -48,6 +50,9 @@ const simulateErrorForField = (sut: RenderResult, fieldName: string, validationE
 
 describe('<Login />', () => {
     afterEach(cleanup)
+    beforeEach(() => {
+        localStorage.clear()
+    })
 
     it('Should start with initial state', () => {
         const validationError = faker.random.words()
@@ -135,11 +140,15 @@ describe('<Login />', () => {
         const error = new InvalidCredentialsError()
         jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
         simulateValidSubmit(sut)
-        // await waitFor(() => {
-        //     sut.queryByTestId('spinner')
-        // })
         const mainError = await sut.findByTestId('main-error')
         expect(mainError?.textContent).toBe(error.message)
         expect(sut.queryByTestId('spinner')).toBeNull()
+    })
+
+    it('Should add accessToken to localstorage on success', async () => {
+        const { sut, authenticationSpy } = makeSut()
+        simulateValidSubmit(sut)
+        await waitFor(() => sut.getByTestId('form'))
+        expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
     })
 })
