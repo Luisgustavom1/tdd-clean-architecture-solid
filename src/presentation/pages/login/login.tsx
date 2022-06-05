@@ -38,6 +38,9 @@ const Login = ({ validation, authentication }: LoginProps) => {
     })
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (isLoading) {
+            return
+        }
         setIsLoading(true)
         await authentication.auth({ ...values })
     }
