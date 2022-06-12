@@ -17,14 +17,14 @@ describe('ValidationBuilder', () => {
 
   it('Should return EmailValidation', () => {
     const fieldName = faker.database.column()
-    const length = faker.random.number()
+    const length = faker.datatype.number()
     const validations = sut.field(fieldName).minLength(length).build()
     expect(validations).toEqual([new MinLengthValidation(fieldName, length)])
   })
 
   it('Should return a list of validations', () => {
     const fieldName = faker.database.column()
-    const length = faker.random.number()
+    const length = faker.datatype.number()
     const validations = sut.field(fieldName).email().required().minLength(length).build()
     expect(validations).toEqual([new EmailValidation(fieldName), new RequireFieldValidation(fieldName), new MinLengthValidation(fieldName, length)])
   })
