@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StateErrorsProps, ValuesProps } from "@/presentation/pages/login/login";
+import { StateErrorsProps, ValuesProps } from "@/presentation/pages/login";
 
 interface ContextData {
     stateErrors: StateErrorsProps,

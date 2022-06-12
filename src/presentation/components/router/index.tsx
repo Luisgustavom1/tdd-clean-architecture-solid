@@ -1,14 +1,17 @@
-import Login from '@/presentation/pages/login/login'
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import '@/presentation/styles/global.scss'
 
-const Router = () => {
+type Props = {
+    makeLogin: React.ComponentType<any>
+}
+
+const Router = ({ makeLogin }: Props) => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path='/' exact component={Login} />
+                <Route path='/login' exact component={makeLogin} />
             </Switch>
         </BrowserRouter>
     )

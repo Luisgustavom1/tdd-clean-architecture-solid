@@ -46,12 +46,16 @@ const Login = ({ validation, authentication }: LoginProps) => {
                 return
             }
             setIsLoading(true)
+            console.log('val', values);
+            
             const account = await authentication.auth({ ...values })
             localStorage.setItem('accessToken', account.accessToken)
             history.replace('/')
         } catch (error) {
             setIsLoading(false)
             setMainError(error.message)
+        } finally {
+            setIsLoading(false)
         }
     }
     React.useEffect(() => {

@@ -1,6 +1,6 @@
 export class MinLengthError extends Error {
   constructor (readonly minLength: number) {
-    super(`O mínimo de caracteres é de ${minLength}`)
+    super(`O tamanho mínimo é de ${minLength} caracteres`)
     this.name = 'MinLengthError'
   }
 }
