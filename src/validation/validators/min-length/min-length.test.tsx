@@ -7,7 +7,13 @@ const makeSut = () => new MinLengthValidation(faker.random.word(), 5)
 describe('MinLengthValidation', () => {
   it('Should return error if value is invalid', () => {
     const sut = makeSut()
-    const error = sut.validate('te')
+    const error = sut.validate('')
     expect(error).toEqual(new MinLengthError(sut.minLenght))
+  })
+
+  it('Should return falsy if value is valid', () => {
+    const sut = makeSut()
+    const error = sut.validate('aloooooo')
+    expect(error).toBeFalsy()
   })
 })
