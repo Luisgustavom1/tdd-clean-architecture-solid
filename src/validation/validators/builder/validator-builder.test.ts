@@ -1,24 +1,31 @@
 import { EmailValidation, RequireFieldValidation, MinLengthValidation } from "@/validation/validators"
+import faker from "@faker-js/faker"
 import { ValidationBuilder as sut } from "./validator-builder"
 
 describe('ValidationBuilder', () => {
   it('Should return RequiredFieldValidation', () => {
-    const validations = sut.field('any_field').required().build()
-    expect(validations).toEqual([new RequireFieldValidation('any_field')])
+    const fieldName = faker.database.column()
+    const validations = sut.field(fieldName).required().build()
+    expect(validations).toEqual([new RequireFieldValidation(fieldName)])
   })
 
   it('Should return EmailValidation', () => {
-    const validations = sut.field('any_field').email().build()
-    expect(validations).toEqual([new EmailValidation('any_field')])
+    const fieldName = faker.database.column()
+    const validations = sut.field(fieldName).email().build()
+    expect(validations).toEqual([new EmailValidation(fieldName)])
   })
 
   it('Should return EmailValidation', () => {
-    const validations = sut.field('any_field').minLength(5).build()
-    expect(validations).toEqual([new MinLengthValidation('any_field', 5)])
+    const fieldName = faker.database.column()
+    const length = faker.random.number()
+    const validations = sut.field(fieldName).minLength(length).build()
+    expect(validations).toEqual([new MinLengthValidation(fieldName, length)])
   })
 
   it('Should return a list of validations', () => {
-    const validations = sut.field('any_field').email().required().minLength(5).build()
-    expect(validations).toEqual([new EmailValidation('any_field'), new RequireFieldValidation('any_field'), new MinLengthValidation('any_field', 5)])
+    const fieldName = faker.database.column()
+    const length = faker.random.number()
+    const validations = sut.field(fieldName).email().required().minLength(length).build()
+    expect(validations).toEqual([new EmailValidation(fieldName), new RequireFieldValidation(fieldName), new MinLengthValidation(fieldName, length)])
   })
 })
