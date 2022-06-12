@@ -45,9 +45,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
             if (isLoading || stateErrors.email || stateErrors.password) {
                 return
             }
-            setIsLoading(true)
-            console.log('val', values);
-            
+            setIsLoading(true)            
             const account = await authentication.auth({ ...values })
             localStorage.setItem('accessToken', account.accessToken)
             history.replace('/')
