@@ -43,18 +43,16 @@ const Login = ({ validation, authentication }: LoginProps) => {
         event.preventDefault();
         try {
             if (isLoading || stateErrors.email || stateErrors.password) {
-                return
-            }
+                return;
+            }            
             setIsLoading(true)            
             const account = await authentication.auth({ ...values })
             localStorage.setItem('accessToken', account.accessToken)
             history.replace('/')
         } catch (error) {
-            setIsLoading(false)
             setMainError(error.message)
-        } finally {
             setIsLoading(false)
-        }
+        } 
     }
     React.useEffect(() => {
         setStateErrors({
