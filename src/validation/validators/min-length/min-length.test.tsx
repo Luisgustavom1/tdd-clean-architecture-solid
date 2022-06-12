@@ -1,4 +1,4 @@
-import { MinLengthError } from "@/validation/errors/min-length"
+import { MinLengthError } from "@/validation/errors"
 import faker from "@faker-js/faker"
 import { MinLengthValidation } from "./min-length-validation"
 

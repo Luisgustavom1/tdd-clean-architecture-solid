@@ -1,4 +1,4 @@
-import { MinLengthError } from "@/validation/errors/min-length";
+import { MinLengthError } from "@/validation/errors";
 import { FieldValidation } from "@/validation/protocols/field-validation";
 
 export class MinLengthValidation implements FieldValidation {
