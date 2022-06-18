@@ -1,7 +1,7 @@
 {
   "name": "clean_arquiteture_tdd",
   "version": "1.0.1",
-  "description": "",
+  "description": "Clean arquiteture with tdd",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open",
