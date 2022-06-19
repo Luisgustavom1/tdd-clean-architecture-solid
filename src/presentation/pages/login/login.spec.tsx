@@ -1,5 +1,5 @@
 import React from 'react'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { fireEvent, render, RenderResult, cleanup, waitFor } from '@testing-library/react'
