@@ -44,15 +44,15 @@ const Login = ({ validation, authentication }: LoginProps) => {
         try {
             if (isLoading || stateErrors.email || stateErrors.password) {
                 return;
-            }            
-            setIsLoading(true)            
+            }
+            setIsLoading(true)
             const account = await authentication.auth({ ...values })
             localStorage.setItem('accessToken', account.accessToken)
             history.replace('/')
         } catch (error) {
             setMainError(error.message)
             setIsLoading(false)
-        } 
+        }
     }
     React.useEffect(() => {
         setStateErrors({
@@ -75,9 +75,11 @@ const Login = ({ validation, authentication }: LoginProps) => {
                         <Button data-testid='submit-form' variant='filled' disabled={!!(stateErrors.email || stateErrors.password)} type='submit'>Entrar</Button>
                         <span data-testid='status-wrap'>
                             {isLoading && <Spinner />}
-                            {mainError && <div data-testid='main-error'>
-                                {mainError}
-                            </div>}
+                            {mainError &&
+                                <div data-testid='main-error'>
+                                    {mainError}
+                                </div>
+                            }
                         </span>
                         <Link to='/signup'>
                             <Button variant='outlined'>Criar conta</Button>
