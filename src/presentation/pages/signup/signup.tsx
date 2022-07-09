@@ -9,7 +9,7 @@ import Context from '@/presentation/contexts/form/form-context';
 
 import Styles from './signup-style.scss'
 
-const Signup = () => {
+const SignUp = () => {
   return (
     <div className={Styles.signup}>
       <Header />
@@ -44,4 +44,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default SignUp
