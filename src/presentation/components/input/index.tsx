@@ -9,7 +9,7 @@ type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputEle
 const Input = ({ ...props }: InputProps) => {
     const { stateErrors, setValues, values } = React.useContext(Context)
 
-    const error = stateErrors[`${props.name}`]
+    const error = stateErrors[`${props.name}Error`]
 
     const enableInput = (e: React.FocusEvent<HTMLInputElement>) => {
         e.target.readOnly = false

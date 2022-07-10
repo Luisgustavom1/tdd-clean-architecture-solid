@@ -12,14 +12,14 @@ import Styles from './login-style.scss'
 import { Validation } from '@/presentation/protocols/validations'
 import { Authentication } from '@/domain/usecases'
 
-type StateErrorsProps = {
+type ValuesProps = {
     email: string,
     password: string
 }
 
-type ValuesProps = {
-    email: string,
-    password: string
+type StateErrorsProps = {
+    emailError: string,
+    passwordError: string
 }
 
 type LoginProps = {
@@ -30,8 +30,8 @@ type LoginProps = {
 const Login = ({ validation, authentication }: LoginProps) => {
     const history = useHistory();
     const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
-        email: '',
-        password: ''
+        emailError: '',
+        passwordError: ''
     })
     const [mainError, setMainError] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false)
@@ -42,7 +42,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            if (isLoading || stateErrors.email || stateErrors.password) {
+            if (isLoading || stateErrors.emailError || stateErrors.passwordError) {
                 return;
             }
             setIsLoading(true)
@@ -57,8 +57,8 @@ const Login = ({ validation, authentication }: LoginProps) => {
     React.useEffect(() => {
         setStateErrors({
             ...stateErrors,
-            email: validation.validate('email', values.email),
-            password: validation.validate('password', values.password)
+            emailError: validation.validate('email', values.email),
+            passwordError: validation.validate('password', values.password)
         })
     }, [values.email, values.password])
 
@@ -72,7 +72,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
                     <Input type='email' name='email' placeholder='Digite seu e-mail' />
                     <Input type='password' name='password' placeholder='Digite sua senha' />
                     <div className={Styles.buttonContainer}>
-                        <Button data-testid='submit-form' variant='filled' disabled={!!(stateErrors.email || stateErrors.password)} type='submit'>Entrar</Button>
+                        <Button data-testid='submit-form' variant='filled' disabled={!!(stateErrors.emailError || stateErrors.passwordError)} type='submit'>Entrar</Button>
                         <span data-testid='status-wrap'>
                             {isLoading && <Spinner />}
                             {mainError &&
