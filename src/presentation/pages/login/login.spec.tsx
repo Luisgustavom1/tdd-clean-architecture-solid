@@ -69,8 +69,8 @@ describe('<Login />', () => {
 
         Helper.testChildCount(sut, 'status-wrap', 0)
 
-        Helper.simulateErrorForField(sut, 'email', validationError)
-        Helper.simulateErrorForField(sut, 'password', validationError)
+        Helper.testStatusForField(sut, 'email', validationError)
+        Helper.testStatusForField(sut, 'password', validationError)
 
         const submitForm = sut.getByTestId('submit-form') as HTMLButtonElement
         expect(submitForm.disabled).toBe(true)
@@ -80,26 +80,26 @@ describe('<Login />', () => {
         const validationError = faker.random.words()
         const { sut } = makeSut({ validationError })
         populateEmailField(sut)
-        Helper.simulateErrorForField(sut, 'email', validationError)
+        Helper.testStatusForField(sut, 'email', validationError)
     })
 
     it('Should show password error if Validation fails', () => {
         const validationError = faker.random.words()
         const { sut } = makeSut({ validationError })
         populatePasswordField(sut)
-        Helper.simulateErrorForField(sut, 'password', validationError)
+        Helper.testStatusForField(sut, 'password', validationError)
     })
 
     it('Should show valid email state if Validation success', () => {
         const { sut } = makeSut();
         populateEmailField(sut)
-        Helper.simulateErrorForField(sut, 'email')
+        Helper.testStatusForField(sut, 'email')
     })
 
     it('Should show valid password state if Validation success', () => {
         const { sut } = makeSut();
         populatePasswordField(sut)
-        Helper.simulateErrorForField(sut, 'password')
+        Helper.testStatusForField(sut, 'password')
     })
 
     it('Should enable submit button if form is valid', () => {

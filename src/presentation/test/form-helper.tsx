@@ -5,9 +5,9 @@ const testChildCount = (sut: RenderResult, fieldName: string, count: number) => 
   expect(errorWrap.childElementCount).toBe(count)
 }
 
-const simulateErrorForField = (sut: RenderResult, fieldName: string, validationError?: string) => {
+const testStatusForField = (sut: RenderResult, fieldName: string, validationError?: string) => {
   const emailError = sut.getByTestId(`${fieldName}-error`)
   expect(emailError.textContent).toBe(validationError || '')
 }
 
-export { testChildCount, simulateErrorForField } 
+export { testChildCount, testStatusForField } 
