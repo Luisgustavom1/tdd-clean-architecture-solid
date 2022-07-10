@@ -48,8 +48,9 @@ const SignUp = ({ validation }: LoginProps) => {
       nameError: validation.validate('name', values.name),
       emailError: validation.validate('email', values.email),
       passwordError: validation.validate('password', values.password),
+      passwordConfirmationError: validation.validate('passwordConfirmation', values.passwordConfirmation),
     })
-  }, [values.name, values.email, values.password])
+  }, [values.name, values.email, values.password, values.passwordConfirmation])
   return (
     <div className={Styles.signup}>
       <Header />
