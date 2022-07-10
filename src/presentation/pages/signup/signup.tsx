@@ -9,29 +9,45 @@ import Context from '@/presentation/contexts/form/form-context';
 
 import Styles from './signup-style.scss'
 import Spinner from '@/presentation/components/spinner'
-
-type StateErrorsProps = {
-  email: string,
-  password: string
-}
+import { Validation } from '@/presentation/protocols/validations'
 
 type ValuesProps = {
+  name: string,
   email: string,
+  passwordConfirmation: string,
   password: string
 }
 
-const SignUp = () => {
+type StateErrorsProps = {
+  [K in keyof ValuesProps]: Record<`${K}Error`, string>
+}[keyof ValuesProps]
+
+type LoginProps = {
+  validation: Validation
+}
+
+const SignUp = ({ validation }: LoginProps) => {
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
-    email: 'Campo obrigatório',
-    password: 'Campo obrigatório'
+    nameError: '',
+    emailError: 'Campo obrigatório',
+    passwordError: 'Campo obrigatório',
+    passwordConfirmationError: 'Campo obrigatório'
   })
   const [mainError, setMainError] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false)
   const [values, setValues] = React.useState<ValuesProps>({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    passwordConfirmation: ''
   })
 
+  React.useEffect(() => {
+    setStateErrors({
+      ...stateErrors,
+      nameError: validation.validate('name', values.name),
+    })
+  }, [values.name])
   return (
     <div className={Styles.signup}>
       <Header />
