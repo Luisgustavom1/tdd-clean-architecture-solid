@@ -45,10 +45,11 @@ const SignUp = ({ validation }: LoginProps) => {
   React.useEffect(() => {
     setStateErrors({
       ...stateErrors,
-      emailError: validation.validate('email', values.email),
       nameError: validation.validate('name', values.name),
+      emailError: validation.validate('email', values.email),
+      passwordError: validation.validate('password', values.password),
     })
-  }, [values.name])
+  }, [values.name, values.email, values.password])
   return (
     <div className={Styles.signup}>
       <Header />
