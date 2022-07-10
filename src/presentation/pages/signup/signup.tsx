@@ -29,7 +29,7 @@ type LoginProps = {
 const SignUp = ({ validation }: LoginProps) => {
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
     nameError: '',
-    emailError: 'Campo obrigatório',
+    emailError: '',
     passwordError: 'Campo obrigatório',
     passwordConfirmationError: 'Campo obrigatório'
   })
@@ -45,6 +45,7 @@ const SignUp = ({ validation }: LoginProps) => {
   React.useEffect(() => {
     setStateErrors({
       ...stateErrors,
+      emailError: validation.validate('email', values.email),
       nameError: validation.validate('name', values.name),
     })
   }, [values.name])
