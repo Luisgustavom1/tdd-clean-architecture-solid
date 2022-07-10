@@ -18,9 +18,12 @@ type ValuesProps = {
   password: string
 }
 
-type StateErrorsProps = {
+type UnionToIntersection<T> =
+  (T extends any ? (k: T) => void : never) extends ((k: infer I) => void) ? I : never
+
+type StateErrorsProps = UnionToIntersection<{
   [K in keyof ValuesProps]: Record<`${K}Error`, string>
-}[keyof ValuesProps]
+}[keyof ValuesProps]>
 
 type LoginProps = {
   validation: Validation
@@ -63,7 +66,7 @@ const SignUp = ({ validation }: LoginProps) => {
           <Input type='password' name='password' placeholder='Digite sua senha' />
           <Input type='password' name='passwordConfirmation' placeholder='Repita sua senha' />
           <div className={Styles.buttonContainer}>
-            <Button data-testid='submit-form' disabled variant='filled' type='submit'>Entrar</Button>
+            <Button data-testid='submit-form' variant='filled' type='submit' disabled={!!(stateErrors.emailError || stateErrors.passwordError || stateErrors.nameError || stateErrors.passwordConfirmationError)} >Entrar</Button>
             <span data-testid='status-wrap'>
               {isLoading && <Spinner />}
               {mainError &&
