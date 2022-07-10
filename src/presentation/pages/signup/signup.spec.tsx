@@ -33,7 +33,7 @@ describe('<SignUp />', () => {
     Helper.testStatusForField(sut, 'name', validationError)
     Helper.testStatusForField(sut, 'email', validationError)
     Helper.testStatusForField(sut, 'password', validationError)
-    Helper.testStatusForField(sut, 'passwordConfirmation', 'Campo obrigatório')
+    Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
 
     const submitForm = sut.getByTestId('submit-form') as HTMLButtonElement
     expect(submitForm.disabled).toBe(true)
@@ -58,5 +58,12 @@ describe('<SignUp />', () => {
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'password')
     Helper.testStatusForField(sut, 'password', validationError)
+  })
+
+  it('Should show passwordConfirmation error if Validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = makeSut({ validationError })
+    Helper.populateField(sut, 'passwordConfirmation')
+    Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
   })
 })
