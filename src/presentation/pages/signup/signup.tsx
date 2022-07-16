@@ -10,6 +10,7 @@ import Context from '@/presentation/contexts/form/form-context';
 import Styles from './signup-style.scss'
 import Spinner from '@/presentation/components/spinner'
 import { Validation } from '@/presentation/protocols/validations'
+import { AddAccount } from '@/domain/usecases/add-account'
 
 type ValuesProps = {
   name: string,
@@ -27,9 +28,10 @@ type StateErrorsProps = UnionToIntersection<{
 
 type LoginProps = {
   validation: Validation
+  addAccount: AddAccount
 }
 
-const SignUp = ({ validation }: LoginProps) => {
+const SignUp = ({ validation, addAccount }: LoginProps) => {
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
     nameError: '',
     emailError: '',
@@ -51,6 +53,7 @@ const SignUp = ({ validation }: LoginProps) => {
       if (isLoading || stateErrors.emailError || stateErrors.passwordError) {
         return;
       }
+      addAccount.add(values)
       setIsLoading(true)
     } catch (error) {
       setMainError(error.message)
