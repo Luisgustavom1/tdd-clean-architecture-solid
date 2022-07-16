@@ -45,6 +45,19 @@ const SignUp = ({ validation }: LoginProps) => {
     passwordConfirmation: ''
   })
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      if (isLoading || stateErrors.emailError || stateErrors.passwordError) {
+        return;
+      }
+      setIsLoading(true)
+    } catch (error) {
+      setMainError(error.message)
+      setIsLoading(false)
+    }
+  }
+
   React.useEffect(() => {
     setStateErrors({
       ...stateErrors,
@@ -59,7 +72,7 @@ const SignUp = ({ validation }: LoginProps) => {
       <Header />
 
       <Context.Provider value={{ setValues, stateErrors, values }}>
-        <form data-testid='form' className={Styles.form}>
+        <form data-testid='form' onSubmit={handleSubmit} className={Styles.form}>
           <h2 className={Styles.formHeader}>Criar conta</h2>
           <Input type='text' name='name' placeholder='Digite seu nome' />
           <Input type='email' name='email' placeholder='Digite seu e-mail' />
