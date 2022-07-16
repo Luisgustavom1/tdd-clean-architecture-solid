@@ -16,4 +16,9 @@ const populateField = (sut: RenderResult, fieldName: string, value = faker.rando
   fireEvent.input(input, { target: { value } })
 }
 
-export { testChildCount, testStatusForField, populateField } 
+const testElementExists = (sut: RenderResult, fieldName: string) => {
+  const element = sut.getByTestId(fieldName)
+  expect(element).toBeTruthy()
+}
+
+export { testChildCount, testStatusForField, populateField, testElementExists } 

@@ -42,11 +42,6 @@ const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.ema
     await waitFor(() => form)
 }
 
-const testElementExists = (sut: RenderResult, fieldName: string) => {
-    const element = sut.getByTestId(fieldName)
-    expect(element).toBeTruthy()
-}
-
 describe('<Login />', () => {
     afterEach(cleanup)
     beforeEach(() => {
@@ -103,7 +98,7 @@ describe('<Login />', () => {
     it('Should show spinner on submit', async () => {
         const { sut } = makeSut();
         await simulateValidSubmit(sut)
-        testElementExists(sut, 'spinner')
+        Helper.testElementExists(sut, 'spinner')
     })
 
     it('Should call Authentication with correct values', async () => {
