@@ -1,19 +1,19 @@
 import React from 'react'
 import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react"
 import SignUp from "./signup"
-import { Helper } from '@/presentation/test'
-import ValidationStub from '@/presentation/test/mock-validation'
+import { Helper, AddAccountSpy, ValidationStub } from '@/presentation/test'
 import { faker } from '@faker-js/faker'
 
 type SutTypes = {
   sut: RenderResult
+  addAccountSpy: AddAccountSpy
 }
 
 type SutParams = {
   validationError: string
 }
 
-const simulateValidSubmit = async (sut: RenderResult, 
+const simulateValidSubmit = async (sut: RenderResult,
   email = faker.internet.email(),
   name = faker.word.noun(),
   password = faker.internet.password()) => {
@@ -29,11 +29,12 @@ const simulateValidSubmit = async (sut: RenderResult,
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
+  const addAccountSpy = new AddAccountSpy()
   const sut = render(
-    <SignUp validation={validationStub} />
+    <SignUp validation={validationStub} addAccount={addAccountSpy} />
   )
 
-  return { sut }
+  return { sut, addAccountSpy }
 }
 
 describe('<SignUp />', () => {
@@ -115,8 +116,22 @@ describe('<SignUp />', () => {
   })
 
   it('Should show spinner on submit', async () => {
-    const {sut} = makeSut()
+    const { sut } = makeSut()
     await simulateValidSubmit(sut)
     Helper.testElementExists(sut, 'spinner')
+  })
+
+  it('Should call AddAccount with correct values', async () => {
+    const { sut, addAccountSpy } = makeSut();
+    const name = faker.name.findName()
+    const email = faker.internet.email()
+    const password = faker.internet.password()
+    await simulateValidSubmit(sut, email, name, password);
+    expect(addAccountSpy.params).toEqual({
+      email,
+      name,
+      password,
+      passwordConfirmation: password
+    })
   })
 })
