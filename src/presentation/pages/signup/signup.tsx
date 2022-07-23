@@ -50,7 +50,12 @@ const SignUp = ({ validation, addAccount }: LoginProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      if (isLoading || stateErrors.emailError || stateErrors.passwordError) {
+      if (isLoading 
+        || stateErrors.emailError 
+        || stateErrors.passwordError
+        || stateErrors.nameError 
+        || stateErrors.passwordConfirmationError
+        ) {
         return;
       }
       addAccount.add(values)
