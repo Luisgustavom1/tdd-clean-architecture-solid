@@ -1,8 +1,9 @@
 import React from 'react'
-import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react"
+import { fireEvent, render, RenderResult, waitFor, act } from "@testing-library/react"
 import SignUp from "./signup"
 import { Helper, AddAccountSpy, ValidationStub } from '@/presentation/test'
 import { faker } from '@faker-js/faker'
+import { InvalidCredentialsError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RenderResult
@@ -22,7 +23,9 @@ const simulateValidSubmit = async (sut: RenderResult,
   Helper.populateField(sut, 'password', password)
   Helper.populateField(sut, 'passwordConfirmation', password)
   const form = sut.getByTestId('submit-form') as HTMLButtonElement
-  fireEvent.submit(form)
+  await act(async () => {
+    fireEvent.submit(form)
+  })
   await waitFor(() => form)
 }
 
@@ -147,5 +150,14 @@ describe('<SignUp />', () => {
     const { sut, addAccountSpy } = makeSut({ validationError })
     await simulateValidSubmit(sut)
     expect(addAccountSpy.callsCount).toBe(0)
+  })
+
+  it('Should present error if AddAccount fails', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
+    await simulateValidSubmit(sut) 
+    Helper.testElementText(sut, 'main-error', error.message)
+    Helper.testChildCount(sut, 'status-wrap', 1)
   })
 })

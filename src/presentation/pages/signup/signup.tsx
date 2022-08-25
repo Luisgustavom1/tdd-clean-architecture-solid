@@ -58,9 +58,9 @@ const SignUp = ({ validation, addAccount }: LoginProps) => {
         ) {
         return;
       }
-      addAccount.add(values)
+      await addAccount.add(values)
       setIsLoading(true)
-    } catch (error) {
+    } catch (error) {      
       setMainError(error.message)
       setIsLoading(false)
     }

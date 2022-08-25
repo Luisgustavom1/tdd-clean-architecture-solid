@@ -88,7 +88,7 @@ describe('<Login />', () => {
 
     it('Should enable submit button if form is valid', () => {
         const { sut } = makeSut();
-        Helper.populateField(sut, 'password') 
+        Helper.populateField(sut, 'password')
         Helper.populateField(sut, 'email')
         const submitButton = sut.getByTestId('submit-form') as HTMLButtonElement
         expect(submitButton.disabled).toBe(false)
@@ -130,9 +130,8 @@ describe('<Login />', () => {
         const error = new InvalidCredentialsError()
         jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
         await simulateValidSubmit(sut)
-        const mainError = await sut.findByTestId('main-error')
-        expect(mainError?.textContent).toBe(error.message)
-        expect(sut.queryByTestId('spinner')).toBeNull()
+        Helper.testElementText(sut, 'main-error', error.message)
+        Helper.testChildCount(sut, 'status-wrap', 1)
     })
 
     it('Should add accessToken to localstorage on success', async () => {

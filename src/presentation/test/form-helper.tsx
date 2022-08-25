@@ -21,4 +21,9 @@ const testElementExists = (sut: RenderResult, fieldName: string) => {
   expect(element).toBeTruthy()
 }
 
-export { testChildCount, testStatusForField, populateField, testElementExists } 
+const testElementText = (sut: RenderResult, fieldName: string, text: string) => {
+  const el = sut.getByTestId(fieldName)
+  expect(el.textContent).toBe(text)
+}
+
+export { testChildCount, testStatusForField, populateField, testElementExists, testElementText } 
