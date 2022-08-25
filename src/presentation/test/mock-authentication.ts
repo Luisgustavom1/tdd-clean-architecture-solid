@@ -2,7 +2,7 @@ import { AccountModel } from "@/domain/model"
 import { mockAccountModel } from "@/domain/test"
 import { Authentication, AuthenticationParams } from "@/domain/usecases"
 
-class AuthenticationSpy implements Authentication {
+export class AuthenticationSpy implements Authentication {
     account = mockAccountModel()
     params: AuthenticationParams
     callsCount = 0
@@ -14,5 +14,3 @@ class AuthenticationSpy implements Authentication {
     }
 
 }
-
-export default AuthenticationSpy

@@ -1,4 +1,5 @@
-export * from '@/presentation/test/mock-validation'
-export * from '@/presentation/test/mock-authentication'
-export * from '@/presentation/test/mock-add-account'
+export * from './mock-validation'
+export * from './mock-authentication'
+export * from './mock-add-account'
+export * from './mock-save-access-token'
 export * as Helper from '@/presentation/test/form-helper'
