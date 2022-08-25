@@ -10,7 +10,7 @@ import Context from '@/presentation/contexts/form/form-context';
 
 import Styles from './login-style.scss'
 import { Validation } from '@/presentation/protocols/validations'
-import { Authentication } from '@/domain/usecases'
+import { Authentication, SaveAccesssToken } from '@/domain/usecases'
 
 type ValuesProps = {
     email: string,
@@ -25,9 +25,10 @@ type StateErrorsProps = {
 type LoginProps = {
     validation: Validation
     authentication: Authentication
+    saveAccessToken: SaveAccesssToken
 }
 
-const Login = ({ validation, authentication }: LoginProps) => {
+const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
     const history = useHistory();
     const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
         emailError: '',
@@ -47,7 +48,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
             }
             setIsLoading(true)
             const account = await authentication.auth({ ...values })
-            localStorage.setItem('accessToken', account.accessToken)
+            await saveAccessToken.save(account.accessToken)
             history.replace('/')
         } catch (error) {
             setMainError(error.message)
