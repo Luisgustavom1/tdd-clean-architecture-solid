@@ -1,6 +1,6 @@
 {
   "name": "clean_arquiteture_tdd",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Clean arquiteture with tdd",
   "main": "index.js",
   "scripts": {
