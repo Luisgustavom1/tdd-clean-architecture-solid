@@ -1,6 +1,8 @@
 import React from 'react'
 import { fireEvent, render, RenderResult, waitFor, act } from "@testing-library/react"
 import SignUp from "./signup"
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import { Helper, AddAccountSpy, ValidationStub } from '@/presentation/test'
 import { faker } from '@faker-js/faker'
 import { InvalidCredentialsError } from '@/domain/errors'
@@ -29,12 +31,15 @@ const simulateValidSubmit = async (sut: RenderResult,
   await waitFor(() => form)
 }
 
+const history = createMemoryHistory({ initialEntries: ['/signup'] })
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
   const addAccountSpy = new AddAccountSpy()
   const sut = render(
-    <SignUp validation={validationStub} addAccount={addAccountSpy} />
+    <Router history={history}>
+      <SignUp validation={validationStub} addAccount={addAccountSpy} />
+    </Router>
   )
 
   return { sut, addAccountSpy }
@@ -156,7 +161,7 @@ describe('<SignUp />', () => {
     const { sut, addAccountSpy } = makeSut()
     const error = new InvalidCredentialsError()
     jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
-    await simulateValidSubmit(sut) 
+    await simulateValidSubmit(sut)
     Helper.testElementText(sut, 'main-error', error.message)
     Helper.testChildCount(sut, 'status-wrap', 1)
   })
