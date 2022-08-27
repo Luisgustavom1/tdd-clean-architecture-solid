@@ -101,9 +101,9 @@ const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
                 </div>
               }
             </span>
-            <a href='/login'>
-              <Button variant='outlined'>Criar conta</Button>
-            </a>
+            <Link to='/login' data-testid='login-link' replace>
+              <Button variant='outlined'>Voltar para o login</Button>
+            </Link>
           </div>
         </form>
       </Context.Provider>
