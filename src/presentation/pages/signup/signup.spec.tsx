@@ -6,7 +6,7 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import SignUp from "./signup";
+import SignUp from ".";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import {
