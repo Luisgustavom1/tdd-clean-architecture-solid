@@ -40,7 +40,7 @@ type LoginProps = {
 
 const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
   const history = useHistory();
-  const [isFormInvalid, setisFormInvalid] = React.useState(false);
+  const [isFormInvalid, setisFormInvalid] = React.useState(true);
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
     nameError: "",
     emailError: "",
