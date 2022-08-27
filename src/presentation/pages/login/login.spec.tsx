@@ -11,7 +11,7 @@ import { act } from 'react-dom/test-utils'
 type SutTypes = {
     sut: RenderResult
     authenticationSpy: AuthenticationSpy
-    saveAccesTokenMock: SaveAccessTokenMock
+    saveAccessTokenMock: SaveAccessTokenMock
 }
 
 type SutParams = {
@@ -22,19 +22,19 @@ const history = createMemoryHistory({ initialEntries: ['/login'] })
 const makeSut = (params?: SutParams): SutTypes => {
     const validationStub = new ValidationStub()
     const authenticationSpy = new AuthenticationSpy()
-    const saveAccesTokenMock = new SaveAccessTokenMock()
+    const saveAccessTokenMock = new SaveAccessTokenMock()
     validationStub.errorMessage = params?.validationError
     const sut = render(
         <Router history={history}>
             <Login 
                 validation={validationStub} 
                 authentication={authenticationSpy} 
-                saveAccessToken={saveAccesTokenMock}
+                saveAccessToken={saveAccessTokenMock}
             />
         </Router>
     )
 
-    return { sut, authenticationSpy, saveAccesTokenMock }
+    return { sut, authenticationSpy, saveAccessTokenMock }
 }
 
 const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
@@ -137,18 +137,18 @@ describe('<Login />', () => {
     })
 
     it('Should present error if SaveAcessToken fails', async () => {
-        const { sut, saveAccesTokenMock } = makeSut()
+        const { sut, saveAccessTokenMock } = makeSut()
         const error = new InvalidCredentialsError()
-        jest.spyOn(saveAccesTokenMock, 'save').mockRejectedValueOnce(error)
+        jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error)
         await simulateValidSubmit(sut)
         Helper.testElementText(sut, 'main-error', error.message)
         Helper.testChildCount(sut, 'status-wrap', 1)
     })
 
     it('Should call SaveAcessToken on success', async () => {
-        const { sut, authenticationSpy, saveAccesTokenMock } = makeSut()
+        const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
         await simulateValidSubmit(sut)
-        expect(saveAccesTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
+        expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
         expect(history.length).toBe(1)
         expect(history.location.pathname).toBe('/')
     })
