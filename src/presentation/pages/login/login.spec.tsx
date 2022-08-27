@@ -153,7 +153,7 @@ describe('<Login />', () => {
         expect(history.location.pathname).toBe('/')
     })
 
-    it('Should got ot signup page', async () => {
+    it('Should go to signup page', async () => {
         const { sut } = makeSut()
         const buttonRegister = sut.getByRole('button', { name: 'Criar conta' })
         fireEvent.click(buttonRegister)
