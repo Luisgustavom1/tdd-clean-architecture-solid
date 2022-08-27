@@ -1,108 +1,134 @@
-import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import Button from '@/presentation/components/button'
-import Footer from '@/presentation/components/footer'
-import Header from '@/presentation/components/header'
-import Input from '@/presentation/components/input'
-import Context from '@/presentation/contexts/form/form-context';
+import Button from "@/presentation/components/button";
+import Footer from "@/presentation/components/footer";
+import Header from "@/presentation/components/header";
+import Input from "@/presentation/components/input";
+import Context from "@/presentation/contexts/form/form-context";
 
-import Styles from './signup-style.scss'
-import Spinner from '@/presentation/components/spinner'
-import { Validation } from '@/presentation/protocols/validations'
-import { AddAccount } from '@/domain/usecases/add-account'
-import { SaveAccesssToken } from '@/domain/usecases'
+import Styles from "./signup-style.scss";
+import Spinner from "@/presentation/components/spinner";
+import { Validation } from "@/presentation/protocols/validations";
+import { AddAccount } from "@/domain/usecases/add-account";
+import { SaveAccesssToken } from "@/domain/usecases";
 
 type ValuesProps = {
-  name: string,
-  email: string,
-  passwordConfirmation: string,
-  password: string
-}
+  name: string;
+  email: string;
+  passwordConfirmation: string;
+  password: string;
+};
 
-type UnionToIntersection<T> =
-  (T extends any ? (k: T) => void : never) extends ((k: infer I) => void) ? I : never
+type UnionToIntersection<T> = (T extends any ? (k: T) => void : never) extends (
+  k: infer I
+) => void
+  ? I
+  : never;
 
-type StateErrorsProps = UnionToIntersection<{
-  [K in keyof ValuesProps]: Record<`${K}Error`, string>
-}[keyof ValuesProps]>
+type StateErrorsProps = UnionToIntersection<
+  {
+    [K in keyof ValuesProps]: Record<`${K}Error`, string>;
+  }[keyof ValuesProps]
+>;
 
 type LoginProps = {
-  validation: Validation
-  addAccount: AddAccount
-  saveAccessToken: SaveAccesssToken
-}
+  validation: Validation;
+  addAccount: AddAccount;
+  saveAccessToken: SaveAccesssToken;
+};
 
 const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
-  const history = useHistory()
+  const history = useHistory();
+  const [isFormInvalid, setisFormInvalid] = React.useState(false);
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
-    nameError: '',
-    emailError: '',
-    passwordError: 'Campo obrigatório',
-    passwordConfirmationError: 'Campo obrigatório'
-  })
-  const [mainError, setMainError] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false)
+    nameError: "",
+    emailError: "",
+    passwordError: "Campo obrigatório",
+    passwordConfirmationError: "Campo obrigatório",
+  });
+  const [mainError, setMainError] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const [values, setValues] = React.useState<ValuesProps>({
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirmation: ''
-  })
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+  });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      if (isLoading 
-        || stateErrors.emailError 
-        || stateErrors.passwordError
-        || stateErrors.nameError 
-        || stateErrors.passwordConfirmationError
-        ) {
+      if (isLoading || isFormInvalid) {
         return;
       }
-      const account = await addAccount.add(values)
-      await saveAccessToken.save(account.accessToken)
-      history.replace('/')
-      setIsLoading(true)
-    } catch (error) {      
-      setMainError(error.message)
-      setIsLoading(false)
+      const account = await addAccount.add(values);
+      await saveAccessToken.save(account.accessToken);
+      history.replace("/");
+      setIsLoading(true);
+    } catch (error) {
+      setMainError(error.message);
+      setIsLoading(false);
     }
-  }
+  };
 
   React.useEffect(() => {
+    const nameError = validation.validate("name", values.name);
+    const emailError = validation.validate("email", values.email);
+    const passwordError = validation.validate("password", values.password);
+    const passwordConfirmationError = validation.validate(
+      "passwordConfirmation",
+      values.passwordConfirmation
+    );
     setStateErrors({
       ...stateErrors,
-      nameError: validation.validate('name', values.name),
-      emailError: validation.validate('email', values.email),
-      passwordError: validation.validate('password', values.password),
-      passwordConfirmationError: validation.validate('passwordConfirmation', values.passwordConfirmation),
-    })
-  }, [values.name, values.email, values.password, values.passwordConfirmation])
+      nameError,
+      emailError,
+      passwordError,
+      passwordConfirmationError,
+    });
+    setisFormInvalid(
+      !!(emailError || passwordError || nameError || passwordConfirmationError)
+    );
+  }, [values.name, values.email, values.password, values.passwordConfirmation]);
   return (
     <div className={Styles.signup}>
       <Header />
 
       <Context.Provider value={{ setValues, stateErrors, values }}>
-        <form data-testid='form' onSubmit={handleSubmit} className={Styles.form}>
+        <form
+          data-testid="form"
+          onSubmit={handleSubmit}
+          className={Styles.form}
+        >
           <h2 className={Styles.formHeader}>Criar conta</h2>
-          <Input type='text' name='name' placeholder='Digite seu nome' />
-          <Input type='email' name='email' placeholder='Digite seu e-mail' />
-          <Input type='password' name='password' placeholder='Digite sua senha' />
-          <Input type='password' name='passwordConfirmation' placeholder='Repita sua senha' />
+          <Input type="text" name="name" placeholder="Digite seu nome" />
+          <Input type="email" name="email" placeholder="Digite seu e-mail" />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Digite sua senha"
+          />
+          <Input
+            type="password"
+            name="passwordConfirmation"
+            placeholder="Repita sua senha"
+          />
           <div className={Styles.buttonContainer}>
-            <Button data-testid='submit-form' variant='filled' type='submit' disabled={!!(stateErrors.emailError || stateErrors.passwordError || stateErrors.nameError || stateErrors.passwordConfirmationError)} >Entrar</Button>
-            <span data-testid='status-wrap'>
+            <Button
+              data-testid="submit-form"
+              variant="filled"
+              type="submit"
+              disabled={isFormInvalid}
+            >
+              Entrar
+            </Button>
+            <span data-testid="status-wrap">
               {isLoading && <Spinner />}
-              {mainError &&
-                <div data-testid='main-error'>
-                  {mainError}
-                </div>
-              }
+              {mainError && <div data-testid="main-error">{mainError}</div>}
             </span>
-            <Link to='/login' data-testid='login-link' replace>
-              <Button variant='outlined'>Voltar para o login</Button>
+            <Link to="/login" data-testid="login-link" replace>
+              <Button variant="outlined">Voltar para o login</Button>
             </Link>
           </div>
         </form>
@@ -110,7 +136,7 @@ const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
