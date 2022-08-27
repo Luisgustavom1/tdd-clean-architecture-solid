@@ -194,4 +194,13 @@ describe("<SignUp />", () => {
     expect(history.length).toBe(1);
     expect(history.location.pathname).toBe("/");
   });
+
+  it("Should present error if SaveAcessToken fails", async () => {
+    const { sut, saveAccessTokenMock } = makeSut();
+    const error = new InvalidCredentialsError();
+    jest.spyOn(saveAccessTokenMock, "save").mockRejectedValueOnce(error);
+    await simulateValidSubmit(sut);
+    Helper.testElementText(sut, "main-error", error.message);
+    Helper.testChildCount(sut, "status-wrap", 1);
+  });
 });
