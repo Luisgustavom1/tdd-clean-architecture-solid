@@ -56,15 +56,16 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
     }
   };
   React.useEffect(() => {
-    const emailError = validation.validate("email", values.email);
-    const passwordError = validation.validate("password", values.password);
+    const formData = { ...values };
+    const emailError = validation.validate("email", formData);
+    const passwordError = validation.validate("password", formData);
 
     setStateErrors({
       ...stateErrors,
       emailError,
       passwordError,
     });
-    setisFormInvalid(!!(emailError || passwordError))
+    setisFormInvalid(!!(emailError || passwordError));
   }, [values.email, values.password]);
 
   return (

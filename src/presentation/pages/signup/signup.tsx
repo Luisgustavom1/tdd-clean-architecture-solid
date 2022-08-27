@@ -73,12 +73,13 @@ const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
   };
 
   React.useEffect(() => {
-    const nameError = validation.validate("name", values.name);
-    const emailError = validation.validate("email", values.email);
-    const passwordError = validation.validate("password", values.password);
+    const formData = { ...values };
+    const nameError = validation.validate("name", formData);
+    const emailError = validation.validate("email", formData);
+    const passwordError = validation.validate("password", formData);
     const passwordConfirmationError = validation.validate(
       "passwordConfirmation",
-      values.passwordConfirmation
+      values
     );
     setStateErrors({
       ...stateErrors,
