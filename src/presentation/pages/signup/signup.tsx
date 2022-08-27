@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import Button from '@/presentation/components/button'
 import Footer from '@/presentation/components/footer'
@@ -11,6 +11,7 @@ import Styles from './signup-style.scss'
 import Spinner from '@/presentation/components/spinner'
 import { Validation } from '@/presentation/protocols/validations'
 import { AddAccount } from '@/domain/usecases/add-account'
+import { SaveAccesssToken } from '@/domain/usecases'
 
 type ValuesProps = {
   name: string,
@@ -29,9 +30,11 @@ type StateErrorsProps = UnionToIntersection<{
 type LoginProps = {
   validation: Validation
   addAccount: AddAccount
+  saveAccessToken: SaveAccesssToken
 }
 
-const SignUp = ({ validation, addAccount }: LoginProps) => {
+const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
+  const history = useHistory()
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
     nameError: '',
     emailError: '',
@@ -58,7 +61,9 @@ const SignUp = ({ validation, addAccount }: LoginProps) => {
         ) {
         return;
       }
-      await addAccount.add(values)
+      const account = await addAccount.add(values)
+      await saveAccessToken.save(account.accessToken)
+      history.replace('/')
       setIsLoading(true)
     } catch (error) {      
       setMainError(error.message)
