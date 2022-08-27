@@ -4,7 +4,7 @@ import { UnexpectedError } from "@/domain/errors/unexpected-error"
 import { AccountModel } from "@/domain/model"
 import { Authentication, AuthenticationParams } from "@/domain/usecases/authentication"
 
-class RemoteAuthentication implements Authentication {
+export class RemoteAuthentication implements Authentication {
     constructor(
         private readonly url: string,
         private readonly httpPostClient: HttpPostClient<AuthenticationParams, AccountModel>
@@ -24,5 +24,3 @@ class RemoteAuthentication implements Authentication {
         }
     }
 }
-
-export default RemoteAuthentication
