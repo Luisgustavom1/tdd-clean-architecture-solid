@@ -62,8 +62,7 @@ describe('Login', () => {
       }
     })
     cy.getByTestId('email').focus().type(faker.internet.email())
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(6))
-    cy.getByTestId('submit-form').click()
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(6)).type('{enter}')
     cy.getByTestId('status-wrap')
       .getByTestId('spinner').should('not.exist')
       .getByTestId('main-error').contains('Algo de errado aconteceu. Tente novamente em instantes')
