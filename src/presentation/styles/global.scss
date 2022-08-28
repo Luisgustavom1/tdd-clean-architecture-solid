@@ -11,7 +11,8 @@
 input[type='password'],
 input[type='email'],
 input[type='text'] {
-    border: 1px solid $primaryLight;
+    border: none;
+    outline: none;
     line-height: 40px;
     border-radius: 6px;
     width: 100%;

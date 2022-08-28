@@ -7,4 +7,58 @@
     width: 100%;
     margin-bottom: 16px;
     margin-top: 4px;
+    font-size: 12px;
+}
+
+.input-wrap {
+    margin-top: 16px;
+    width: 100%;
+    position: relative;
+    border-bottom: 2px dashed $disabledColor;
+
+    &::after {
+        content: '';
+        width: 100%;
+        height: 2px;
+        background-color: $primaryLight;
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        transform-origin: 0%;
+        transform: scaleX(0);
+        transition: transform 500ms ease;
+    }
+
+    &:focus-within {
+        border-color: transparent;
+        
+        &::after {
+            transform: scaleX(1);
+        }
+
+        label {
+            transform: scale(.9) translateY(-32px);
+        }
+    }
+
+    input {
+        width: 100%;
+        padding: 0px 40px 0px 8px;
+
+        &:not(:placeholder-shown) + label {
+            transform: scale(.9) translateY(-32px);
+        }
+    }
+
+    label {
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+        color: $disabledColor;
+        user-select: none;
+        cursor: text;
+        transform-origin: 0%;
+        transform: translateY(0);
+        transition: transform 400ms ease;
+    }
 }
