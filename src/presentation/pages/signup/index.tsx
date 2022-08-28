@@ -59,13 +59,13 @@ const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      setIsLoading(true);
       if (isLoading || isFormInvalid) {
         return;
       }
       const account = await addAccount.add(values);
       await saveAccessToken.save(account.accessToken);
       history.replace("/");
-      setIsLoading(true);
     } catch (error) {
       setMainError(error.message);
       setIsLoading(false);
