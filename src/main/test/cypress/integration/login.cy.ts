@@ -105,4 +105,19 @@ describe('Login', () => {
       .getByTestId('main-error').contains('Algo de errado aconteceu. Tente novamente em instantes')
     cy.url().should('eq', `${baseUrl}/login`)
   })
+
+  it('Should prevent multiple submits', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 200,
+      response: {
+        invalidProperty: faker.datatype.uuid()
+      }
+    }).as('request')
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('submit-form').dblclick()
+    cy.get('@request.all').should('have.length', 1)
+  })
 })
