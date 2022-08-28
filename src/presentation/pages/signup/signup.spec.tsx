@@ -150,7 +150,7 @@ describe("<SignUp />", () => {
 
   it("Should call AddAccount with correct values", async () => {
     const { sut, addAccountSpy } = makeSut();
-    const name = faker.name.findName();
+    const name = faker.name.fullName();
     const email = faker.internet.email();
     const password = faker.internet.password();
     await simulateValidSubmit(sut, email, name, password);
