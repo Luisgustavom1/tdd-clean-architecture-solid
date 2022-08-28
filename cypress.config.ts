@@ -6,7 +6,12 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       const webpackPreprocessor = require('@cypress/webpack-preprocessor')
 
-      on('file:preprocessor', webpackPreprocessor())
+      const options = {
+        webpackOptions: require('./webpack.config'),
+        watchOptions: {},
+      } 
+
+      on('file:preprocessor', webpackPreprocessor(options))
 
       return config
     },
