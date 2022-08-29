@@ -10,8 +10,7 @@ import Context from "@/presentation/contexts/form/form-context";
 import Styles from "./signup-style.scss";
 import Spinner from "@/presentation/components/spinner";
 import { Validation } from "@/presentation/protocols/validations";
-import { AddAccount } from "@/domain/usecases/add-account";
-import { SaveAccesssToken } from "@/domain/usecases";
+import { SaveAccesssToken, AddAccount } from "@/domain/usecases";
 
 type ValuesProps = {
   name: string;

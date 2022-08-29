@@ -2,7 +2,7 @@ import { HttpPostClient, HttpPostCode } from "@/data/protocols/http";
 import { UnexpectedError } from "@/domain/errors";
 import { EmailInUseError } from "@/domain/errors/email-in-user";
 import { AccountModel } from "@/domain/model";
-import { AddAccount, AddAccountParams } from "@/domain/usecases/add-account";
+import { AddAccount, AddAccountParams } from "@/domain/usecases";
 
 export class RemoteAddAccount implements AddAccount {
   constructor (
