@@ -4,7 +4,7 @@ import { RemoteAuthentication } from "./remote-authentication";
 import { HttpPostClientSpy } from "@/data/test";
 import { mockAccountModel, mockAuthentication } from "@/domain/test/mock-account";
 import { InvalidCredentialsError, UnexpectedError } from "@/domain/errors";
-import { HttpPostCode } from "@/data/protocols/http";
+import { HttpStatusCode } from "@/data/protocols/http";
 import { AuthenticationParams } from "@/domain/usecases/authentication";
 import { AccountModel } from "@/domain/model";
 
@@ -46,7 +46,7 @@ describe('Remote Authentication', () => {
     test('Should throw InvalidCredentialsError if HttpPostClient returns 401', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.unathorized
+            statusCode: HttpStatusCode.unathorized
         }
 
         const promiseResult = sut.auth(mockAuthentication())
@@ -57,7 +57,7 @@ describe('Remote Authentication', () => {
     test('Should throw UnexpectedError if HttpPostClient returns 400', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.badRequest
+            statusCode: HttpStatusCode.badRequest
         }
 
         const promiseResult = sut.auth(mockAuthentication())
@@ -68,7 +68,7 @@ describe('Remote Authentication', () => {
     test('Should throw UnexpectedError if HttpPostClient returns 500', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.serverError
+            statusCode: HttpStatusCode.serverError
         }
 
         const promiseResult = sut.auth(mockAuthentication())
@@ -79,7 +79,7 @@ describe('Remote Authentication', () => {
     test('Should throw UnexpectedError if HttpPostClient returns 404', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.notFound
+            statusCode: HttpStatusCode.notFound
         }
 
         const promiseResult = sut.auth(mockAuthentication())
@@ -91,7 +91,7 @@ describe('Remote Authentication', () => {
         const { sut, httpPostClientSpy } = makeSut()
         const httpResult = mockAccountModel()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.ok,
+            statusCode: HttpStatusCode.ok,
             body: httpResult
         }
 

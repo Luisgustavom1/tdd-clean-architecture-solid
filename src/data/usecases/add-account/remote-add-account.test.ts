@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import { RemoteAddAccount } from "./remote-add-account";
 import { HttpPostClientSpy } from "@/data/test";
 import { UnexpectedError } from "@/domain/errors";
-import { HttpPostCode } from "@/data/protocols/http";
+import { HttpStatusCode } from "@/data/protocols/http";
 import { AuthenticationParams } from "@/domain/usecases/authentication";
 import { AccountModel } from "@/domain/model";
 import { mockAddAccount, mockAccountModel } from '@/domain/test/mock-add-account';
@@ -46,7 +46,7 @@ describe('Remote Add Account', () => {
     test('Should throw InvalidCredentialsError if HttpPostClient returns 401', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.unathorized
+            statusCode: HttpStatusCode.unathorized
         }
 
         const promiseResult = sut.add(mockAddAccount())
@@ -57,7 +57,7 @@ describe('Remote Add Account', () => {
     test('Should throw UnexpectedError if HttpPostClient returns 400', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.badRequest
+            statusCode: HttpStatusCode.badRequest
         }
 
         const promiseResult = sut.add(mockAddAccount())
@@ -68,7 +68,7 @@ describe('Remote Add Account', () => {
     test('Should throw UnexpectedError if HttpPostClient returns 500', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.serverError
+            statusCode: HttpStatusCode.serverError
         }
 
         const promiseResult = sut.add(mockAddAccount())
@@ -79,7 +79,7 @@ describe('Remote Add Account', () => {
     test('Should throw UnexpectedError if HttpPostClient returns 404', async () => {
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.notFound
+            statusCode: HttpStatusCode.notFound
         }
 
         const promiseResult = sut.add(mockAddAccount())
@@ -91,7 +91,7 @@ describe('Remote Add Account', () => {
         const { sut, httpPostClientSpy } = makeSut()
         const httpResult = mockAccountModel()
         httpPostClientSpy.response = {
-            statusCode: HttpPostCode.ok,
+            statusCode: HttpStatusCode.ok,
             body: httpResult
         }
 

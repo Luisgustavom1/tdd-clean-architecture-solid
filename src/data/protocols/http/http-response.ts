@@ -1,4 +1,4 @@
-export enum HttpPostCode {
+export enum HttpStatusCode {
     ok = 200,
     noContent = 204,
     badRequest = 400,
@@ -9,6 +9,6 @@ export enum HttpPostCode {
 }
 
 export type HttpResponse<BodyResponse = any> = {
-    statusCode: HttpPostCode
+    statusCode: HttpStatusCode
     body?: BodyResponse
 }
