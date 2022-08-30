@@ -3,18 +3,18 @@ import axios, { AxiosResponse } from "axios";
 
 export class AxiosHttpClient implements HttpPostClient<any, any> {
     async post(params: HttpPostParams<any>): Promise<HttpResponse<any>> {
-        let httpResponse: AxiosResponse<any>
+        let axiosResponse: AxiosResponse<any>
 
         try {
-            httpResponse = await axios.post(params.url, params.body)
+            axiosResponse = await axios.post(params.url, params.body)
 
         } catch (error) {
-            httpResponse = error.response;
+            axiosResponse = error.response;
         }
 
         return {
-            body: httpResponse.data,
-            statusCode: httpResponse.status,
+            body: axiosResponse.data,
+            statusCode: axiosResponse.status,
         }
     }
 }
