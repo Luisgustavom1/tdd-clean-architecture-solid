@@ -69,7 +69,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
   }, [values.email, values.password]);
 
   return (
-    <div className={Styles.login}>
+    <div className={Styles.loginWrap}>
       <Header />
 
       <Context.Provider value={{ stateErrors, values, setValues }}>

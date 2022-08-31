@@ -1,0 +1,140 @@
+@import "../../styles/color.scss";
+
+.surveyListWrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $background;
+
+  .headerWrap {
+    background-color: $primary;
+    border-top: 40px solid $primaryDark;
+
+    .headerContent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 40px;
+
+      img {
+        width: 60px;
+      }
+
+      .logoutWrap {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        color: $white;
+
+        span {
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+
+        a {
+          color: currentColor;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .contentWrap {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    max-width: 800px;
+    width: 100%;
+    padding: 40px;
+
+    h2 {
+      color: $primaryDark;
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+
+      li {
+        flex-basis: 48%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        height: 250px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;        
+        border-radius: 8px;
+        overflow: hidden;
+
+        .surveyContent {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          padding: 0 16px 0 24px;
+          background-repeat: no-repeat;
+          background-image: 
+            linear-gradient(to right, rgba($primaryLight, 0.1), rgba($primaryLight, 0.1)),
+            linear-gradient(to right, rgba($white, 0.1), rgba($white, 0.1));
+          background-position: 0 0, 54px 0;
+          background-size: 50px 100%, 100%;
+
+          time {
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            background-color: $primaryLight;
+            color: $white;
+            text-align: center;
+            border-radius: 8px;
+            padding: 8px;
+
+            .day {
+              font-size: 40px;
+              font-weight: bold;
+            }
+
+            .month {
+              font-size: 12px;
+              margin-bottom: 4px;
+            }
+
+            .year {
+              font-size: 16px;
+            }
+          }
+
+          p {
+            font-size: 16px;
+            font-weight: bold;
+          }
+        }
+
+        footer {
+          background-color: $primary;
+          color: $white;
+          line-height: 40px;
+          text-transform: lowercase;
+          text-align: center;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $primaryDark;
+          }
+        }
+      }
+    }
+  }
+}

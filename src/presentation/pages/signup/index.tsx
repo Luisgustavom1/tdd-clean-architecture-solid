@@ -92,7 +92,7 @@ const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
     );
   }, [values.name, values.email, values.password, values.passwordConfirmation]);
   return (
-    <div className={Styles.signup}>
+    <div className={Styles.signupWrap}>
       <Header />
 
       <Context.Provider value={{ setValues, stateErrors, values }}>
