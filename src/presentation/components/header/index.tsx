@@ -1,17 +1,20 @@
-import React from "react"
-import Logo from "../logo"
-import Styles from './styles.scss'
+import React, { memo } from "react";
+import Logo from "../logo";
+import Styles from "./styles.scss";
 
 const Header = () => {
-    return (
-        <header className={Styles.header}>
-            <Logo />
+  return (
+    <header className={Styles.headerWrap}>
+      <div className={Styles.headerContent}>
+        <Logo />
 
-            <h1 className={Styles.headerTitle}>
-                4Dev - Enquetes para devs
-            </h1>
-        </header>
-    )
-}
+        <div className={Styles.logoutWrap}>
+          <span>LUISAO O + BRABO</span>
+          <a href="#">Sair</a>
+        </div>
+      </div>
+    </header>
+  );
+};
 
-export default Header
+export default memo(Header);

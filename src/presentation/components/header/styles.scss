@@ -1,18 +1,40 @@
 @import "../../styles/color.scss";
 
-.header {
+.headerWrap {
     background-color: $primary;
+    border-top: 40px solid $primaryDark;
 
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    .headerContent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 24px 40px;
 
-    border-top: $spacing-lg solid $primaryDark;
+        img {
+            width: 60px;
+        }
 
-    padding: $spacing-lg 0;
+        .logoutWrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            color: $white;
 
-    .headerTitle {
-        color: $white;
-        margin-top: 16px;
+            span {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            a {
+                color: currentColor;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
     }
 }

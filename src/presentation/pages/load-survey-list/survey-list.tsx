@@ -1,4 +1,5 @@
 import Footer from "@/presentation/components/footer";
+import Header from "@/presentation/components/header";
 import Logo from "@/presentation/components/logo";
 import React from "react";
 import Styles from "./survey-list-styles.scss";
@@ -6,16 +7,7 @@ import Styles from "./survey-list-styles.scss";
 const LoadSurveyList = () => {
   return (
     <div className={Styles.surveyListWrap}>
-      <header className={Styles.headerWrap}>
-        <div className={Styles.headerContent}>
-          <Logo />
-
-          <div className={Styles.logoutWrap}>
-            <span>LUISAO O + BRABO</span>
-            <a href="#">Sair</a>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <div className={Styles.contentWrap}>
         <h2>Enquetes</h2>
