@@ -13,6 +13,9 @@ const LoadSurveyList = () => {
       <div className={Styles.contentWrap}>
         <h2>Enquetes</h2>
         <ul>
+          <li></li>
+          <li></li>
+          <li></li>
           <li>
             <div className={Styles.surveyContent}>
               <time>
