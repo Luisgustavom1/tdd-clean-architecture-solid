@@ -37,4 +37,8 @@
             }
         }
     }
+
+    @media (max-width: 600px) {
+        border-top: 24px solid $primaryDark;
+    }
 }
