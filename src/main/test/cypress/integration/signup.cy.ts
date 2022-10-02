@@ -74,13 +74,13 @@ describe('Signup', () => {
     FormHelper.testUrl('/signup')
   })
 
-  it('Should present save accessToken if valid credentials are povided', () => {
+  it('Should present save account if valid credentials are povided', () => {
     SignupMocks.mockOk()
     simulateValidSubmit()
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('accessToken')
+    FormHelper.testLocalStorageItem('account')
   })
 
   it('Should prevent multiple submits', () => {

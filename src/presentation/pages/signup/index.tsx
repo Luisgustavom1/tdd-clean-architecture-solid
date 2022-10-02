@@ -10,7 +10,7 @@ import Context from "@/presentation/contexts/form/form-context";
 import Styles from "./signup-style.scss";
 import Spinner from "@/presentation/components/spinner";
 import { Validation } from "@/presentation/protocols/validations";
-import { SaveAccesssToken, AddAccount } from "@/domain/usecases";
+import { UpdateCurrentAccount, AddAccount } from "@/domain/usecases";
 
 type ValuesProps = {
   name: string;
@@ -34,10 +34,10 @@ type StateErrorsProps = UnionToIntersection<
 type LoginProps = {
   validation: Validation;
   addAccount: AddAccount;
-  saveAccessToken: SaveAccesssToken;
+  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
+const SignUp = ({ validation, addAccount, updateCurrentAccount }: LoginProps) => {
   const history = useHistory();
   const [isFormInvalid, setisFormInvalid] = React.useState(true);
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
@@ -63,7 +63,7 @@ const SignUp = ({ validation, addAccount, saveAccessToken }: LoginProps) => {
         return;
       }
       const account = await addAccount.add(values);
-      await saveAccessToken.save(account.accessToken);
+      await updateCurrentAccount.save(account);
       history.replace("/");
     } catch (error) {
       setMainError(error.message);

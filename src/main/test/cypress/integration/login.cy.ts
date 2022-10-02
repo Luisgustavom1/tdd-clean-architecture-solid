@@ -53,13 +53,13 @@ describe('Login', () => {
     FormHelper.testUrl('/login')
   })
 
-  it('Should present save accessToken if valid credentials are povided', () => {
+  it('Should present save account if valid credentials are povided', () => {
     LoginMock.mockOk()
     simulateValidSubmit()
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('accessToken')
+    FormHelper.testLocalStorageItem('account')
   })
 
   it('Should present UnexpectedError if invalid data is returned', () => {
