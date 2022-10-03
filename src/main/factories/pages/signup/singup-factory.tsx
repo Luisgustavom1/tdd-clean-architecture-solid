@@ -9,7 +9,6 @@ export const makeSignup = () => {
     <Signup
       validation={makeSignupValidation()}
       addAccount={makeRemoteAddAccount()}
-      updateCurrentAccount={makeLocalUpdateCurrentAccount()}
     />
   );
 }

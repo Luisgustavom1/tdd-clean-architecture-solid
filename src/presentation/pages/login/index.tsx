@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import Button from "@/presentation/components/button";
@@ -10,7 +10,8 @@ import Context from "@/presentation/contexts/form/form-context";
 
 import Styles from "./login-style.scss";
 import { Validation } from "@/presentation/protocols/validations";
-import { Authentication, UpdateCurrentAccount } from "@/domain/usecases";
+import { Authentication } from "@/domain/usecases";
+import { ApiContext } from "@/presentation/contexts";
 
 type ValuesProps = {
   email: string;
@@ -25,10 +26,10 @@ type StateErrorsProps = {
 type LoginProps = {
   validation: Validation;
   authentication: Authentication;
-  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-const Login = ({ validation, authentication, updateCurrentAccount }: LoginProps) => {
+const Login = ({ validation, authentication }: LoginProps) => {
+  const { setCurrentAccount } = useContext(ApiContext)
   const history = useHistory();
   const [isFormInvalid, setisFormInvalid] = React.useState(true);
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
@@ -48,7 +49,7 @@ const Login = ({ validation, authentication, updateCurrentAccount }: LoginProps)
 
       setIsLoading(true);
       const account = await authentication.auth({ ...values });
-      await updateCurrentAccount.save(account);
+      setCurrentAccount(account);
       history.replace("/");
     } catch (error) {
       setMainError(error.message);

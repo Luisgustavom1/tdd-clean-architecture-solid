@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import Button from "@/presentation/components/button";
@@ -11,6 +11,7 @@ import Styles from "./signup-style.scss";
 import Spinner from "@/presentation/components/spinner";
 import { Validation } from "@/presentation/protocols/validations";
 import { UpdateCurrentAccount, AddAccount } from "@/domain/usecases";
+import { ApiContext } from "@/presentation/contexts";
 
 type ValuesProps = {
   name: string;
@@ -34,10 +35,13 @@ type StateErrorsProps = UnionToIntersection<
 type LoginProps = {
   validation: Validation;
   addAccount: AddAccount;
-  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-const SignUp = ({ validation, addAccount, updateCurrentAccount }: LoginProps) => {
+const SignUp = ({
+  validation,
+  addAccount,
+}: LoginProps) => {
+  const { setCurrentAccount } = useContext(ApiContext);
   const history = useHistory();
   const [isFormInvalid, setisFormInvalid] = React.useState(true);
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
@@ -63,7 +67,7 @@ const SignUp = ({ validation, addAccount, updateCurrentAccount }: LoginProps) =>
         return;
       }
       const account = await addAccount.add(values);
-      await updateCurrentAccount.save(account);
+      setCurrentAccount(account);
       history.replace("/");
     } catch (error) {
       setMainError(error.message);

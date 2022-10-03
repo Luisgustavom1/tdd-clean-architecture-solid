@@ -23,7 +23,7 @@ describe('LocalUpdateCurrentAccount', () => {
     const account = mockAccountModel()
     await sut.save(account)
     expect(setStorageMock.key).toBe('account')
-    expect(setStorageMock.value).toBe(JSON.stringify(account))
+    expect(setStorageMock.value).toBe(account)
   })
 
   it('Should throw error if SetStorage throw error', async () => {
