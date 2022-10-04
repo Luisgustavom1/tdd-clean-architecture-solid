@@ -10,6 +10,7 @@ import {
   getCurrentAccountAdapter,
   setCurrentAccountAdapter,
 } from "../adapters/current-account-adapter";
+import { PrivateRoute } from "@/presentation/components/private-route/private-route";
 
 const Router = () => {
   return (
@@ -23,7 +24,7 @@ const Router = () => {
         <Switch>
           <Route path="/login" exact component={makeLogin} />
           <Route path="/signup" exact component={makeSignup} />
-          <Route path="/" exact component={LoadSurveyList} />
+          <PrivateRoute path="/" exact component={LoadSurveyList} />
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>

@@ -16,7 +16,7 @@ const makeSut = (account = mockAccountModel()) => {
       }}
     >
       <Router history={history}>
-        <PrivateRoute history={history} />
+        <PrivateRoute />
       </Router>
     </ApiContext.Provider>
   );
