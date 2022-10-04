@@ -3,7 +3,7 @@ import { createContext } from 'react'
 
 type Props = {
   setCurrentAccount: (account: AccountModel) => void
-  getCurrentAccount?: AccountModel
+  getCurrentAccount?: () => AccountModel
 }
 
 export default createContext<Props>(null)
