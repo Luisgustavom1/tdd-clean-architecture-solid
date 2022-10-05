@@ -1,19 +1,18 @@
 import Footer from "@/presentation/components/footer";
 import Header from "@/presentation/components/header";
-import { Icon, IconName } from "@/presentation/components/icon";
-import Logo from "@/presentation/components/logo";
 import React from "react";
+import { SurveyItemEmpty } from "./components/survey-item-empty";
 import Styles from "./survey-list-styles.scss";
 
-const LoadSurveyList = () => {
+const SurveyList = () => {
   return (
     <div className={Styles.surveyListWrap}>
       <Header />
 
       <div className={Styles.contentWrap}>
         <h2>Enquetes</h2>
-        <ul>
-          
+        <ul data-testid="survey-list">
+          <SurveyItemEmpty />
         </ul>
       </div>
 
@@ -21,4 +20,4 @@ const LoadSurveyList = () => {
     </div>
   );
 };
-export default LoadSurveyList;
+export default SurveyList;
