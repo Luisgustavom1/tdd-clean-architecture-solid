@@ -26,115 +26,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
-
-      li {
-        flex-basis: 48%;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        height: 250px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;        
-        border-radius: 8px;
-
-        .surveyContent {
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 16px;
-          padding: 0 16px 0 24px;
-          background-repeat: no-repeat;
-          background-image: 
-            linear-gradient(to right, rgba($primaryLight, 0.1), rgba($primaryLight, 0.1)),
-            linear-gradient(to right, rgba($white, 0.1), rgba($white, 0.1));
-          background-position: 0 0, 54px 0;
-          background-size: 50px 100%, 100%;
-          position: relative;
-          border-radius: 8px 8px 0 0;
-
-          time {
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            background-color: $primaryLight;
-            color: $white;
-            text-align: center;
-            border-radius: 8px;
-            padding: 8px;
-
-            .day {
-              font-size: 40px;
-              font-weight: bold;
-            }
-
-            .month {
-              font-size: 12px;
-              margin-bottom: 4px;
-            }
-
-            .year {
-              font-size: 16px;
-            }
-          }
-
-          p {
-            font-size: 16px;
-            font-weight: bold;
-            flex-grow: 1;
-          }
-        }
-
-        footer {
-          background-color: $primary;
-          color: $white;
-          line-height: 40px;
-          text-transform: lowercase;
-          text-align: center;
-          cursor: pointer;
-          border-radius: 0 0 8px 8px;
-
-          &:hover {
-            background-color: $primaryDark;
-          }
-        }
-
-        &:empty {
-          position: relative;
-          background-repeat: no-repeat;
-          overflow: hidden;
-          background-image: 
-            linear-gradient(to right, $disabledBackground, $disabledBackground),
-            linear-gradient(to right, $disabledBackground, $disabledBackground),
-            linear-gradient(to right, $disabledBackground, $disabledBackground),
-            linear-gradient(to right, $disabledBackground, $disabledBackground),
-            linear-gradient(to right, $disabledBackground, $disabledBackground);
-          background-position: 
-            24px 55px,
-            left 0 bottom 0,
-            108px 77px,
-            108px 97px,
-            108px 117px;
-          background-size: 
-            60px 100px,
-            100% 40px,
-            140px 16px,
-            120px 16px,
-            160px 16px;
-
-            &::after {
-              content: '';
-              position: absolute;
-              width: 100%;
-              height: 100%;
-              top: 0;
-              left: 0;
-              transform: translateX(-100%);
-              background-image:
-                  linear-gradient(to right, transparent, rgba($white, 0.2), transparent);
-              animation: shimmer 1.2s infinite;
-            }
-        }
-      }
     }
   }
 
@@ -143,11 +34,5 @@
     top: -20px;
     right: -20px;
     padding: 10px;
-  }
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
   }
 }
