@@ -17,7 +17,7 @@ export const Icon = ({ icon, className, ...rest }: IconProps) => {
       className={[Styles.container, iconColor, className].join(" ")}
       {...rest}
     >
-      <img className={Styles.icon} src={icon} alt="" />
+      <img data-testid='icon' className={Styles.icon} src={icon} alt="" />
     </div>
   );
 };
