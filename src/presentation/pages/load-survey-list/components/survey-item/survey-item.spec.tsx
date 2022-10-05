@@ -17,11 +17,27 @@ describe("SurveyItem component", () => {
     makeSut(survey);
     expect(screen.getByTestId("icon")).toHaveProperty(
       "src",
-      IconName.thumbDown
+      IconName.thumbUp
     );
     expect(screen.getByTestId("question").textContent).toBe(survey.question);
     expect(screen.getByTestId("day").textContent).toBe("10");
     expect(screen.getByTestId("month").textContent).toBe("jan");
     expect(screen.getByTestId("year").textContent).toBe("2022");
+  });
+
+  it("Should render with correct values", () => {
+    const survey = Object.assign(mockSurveyModel(), {
+      didAnswer: false,
+      date: new Date("2019-05-05T00:00:00"),
+    });
+    makeSut(survey);
+    expect(screen.getByTestId("icon")).toHaveProperty(
+      "src",
+      IconName.thumbDown
+    );
+    expect(screen.getByTestId("question").textContent).toBe(survey.question);
+    expect(screen.getByTestId("day").textContent).toBe("05");
+    expect(screen.getByTestId("month").textContent).toBe("mai");
+    expect(screen.getByTestId("year").textContent).toBe("2019");
   });
 });
