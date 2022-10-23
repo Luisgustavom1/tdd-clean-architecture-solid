@@ -1,5 +1,5 @@
 import React from "react";
-import Styles from "./survey-item-empty.scss";
+import Styles from "./item-empty.scss";
 
 export const SurveyItemEmpty = () => {
   return (
