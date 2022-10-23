@@ -4,6 +4,7 @@ import React from "react";
 import { LoadSurveyList } from "@/domain/usecases";
 import { SurveyModel } from "@/domain/model";
 import { mockSurveyListModel } from "@/domain/test";
+import { UnexpectedError } from "@/domain/errors";
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0;
@@ -19,8 +20,7 @@ type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy;
 };
 
-const makeSut = (): SutTypes => {
-  const loadSurveyListSpy = new LoadSurveyListSpy();
+const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   render(<SurveyList loadSurveyList={loadSurveyListSpy} />);
 
   return {
@@ -45,5 +45,16 @@ describe("SurveyList Component", () => {
   it("Should render SurveyItems on success", async () => {
     makeSut();
     expect(await screen.findAllByTestId("survey-item")).toHaveLength(2);
+    expect(screen.queryByTestId("error")).toBeFalsy();
+  });
+
+  it("Should render render erros on failure", async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy();
+    const error = new UnexpectedError();
+    jest
+      .spyOn(loadSurveyListSpy, "loadAll")
+      .mockRejectedValueOnce(error);
+    makeSut(loadSurveyListSpy);
+    expect((await screen.findByTestId("error")).textContent).toBe(error.message);
   });
 });
