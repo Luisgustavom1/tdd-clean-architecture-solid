@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SurveyList from "./survey-list";
 import React from "react";
 import { LoadSurveyList } from "@/domain/usecases";
@@ -51,10 +51,24 @@ describe("SurveyList Component", () => {
   it("Should render render erros on failure", async () => {
     const loadSurveyListSpy = new LoadSurveyListSpy();
     const error = new UnexpectedError();
+    jest.spyOn(loadSurveyListSpy, "loadAll").mockRejectedValueOnce(error);
+    makeSut(loadSurveyListSpy);
+    expect((await screen.findByTestId("error")).textContent).toBe(
+      error.message
+    );
+  });
+
+  it("Should call loadSurveyList on reload", async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy();
     jest
       .spyOn(loadSurveyListSpy, "loadAll")
-      .mockRejectedValueOnce(error);
+      .mockRejectedValueOnce(new UnexpectedError());
     makeSut(loadSurveyListSpy);
-    expect((await screen.findByTestId("error")).textContent).toBe(error.message);
+    await waitFor(() => screen.getByRole("heading"));
+    fireEvent.click(
+      await screen.findByRole("button", { name: /tentar novamente/i })
+    );
+    await waitFor(() => screen.getByRole("heading"));
+    expect(loadSurveyListSpy.callsCount).toBe(1);
   });
 });
