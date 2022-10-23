@@ -9,7 +9,7 @@ type Props = {
 
 export const SurveyItem = ({ survey }: Props) => {
   return (
-    <div className={Styles.surveyItemWrap}>
+    <div data-testid='survey-item' className={Styles.surveyItemWrap}>
       <div className={Styles.surveyContent}>
         <Icon
           className={Styles.iconWrap}
