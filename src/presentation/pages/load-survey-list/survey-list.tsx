@@ -15,6 +15,7 @@ type Props = {
 const SurveyList = ({ loadSurveyList }: Props) => {
   const [surveys, setSurveys] = useState<SurveyModel[]>([]);
   const [error, setError] = useState("");
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     loadSurveyList
@@ -25,14 +26,14 @@ const SurveyList = ({ loadSurveyList }: Props) => {
       .catch((err) => {
         setError(err.message);
       });
-  }, []);
+  }, [reload]);
   return (
     <div className={Styles.surveyListWrap}>
       <Header />
 
       <div className={Styles.contentWrap}>
         <h2>Enquetes</h2>
-        <SurveyContext.Provider value={{ surveys, error }}>
+        <SurveyContext.Provider value={{ surveys, error, reload, setReload }}>
           {error ? <Error /> : <SurveyItemList />}
         </SurveyContext.Provider>
       </div>
