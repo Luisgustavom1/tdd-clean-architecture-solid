@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker"
-import { HttpPostParams } from "../protocols/http"
+import { HttpGetParams, HttpPostParams } from "../protocols/http"
 
 export const mockPostRequest = (): HttpPostParams<any> => ({
     url: faker.internet.url(),
@@ -8,6 +8,9 @@ export const mockPostRequest = (): HttpPostParams<any> => ({
     }
 })
 
-export const mockGetRequest = (): HttpPostParams<any> => ({
-    url: faker.internet.url()
+export const mockGetRequest = (): HttpGetParams => ({
+    url: faker.internet.url(),
+    headers: {
+        Authorization: faker.random.alphaNumeric
+    }
 })
