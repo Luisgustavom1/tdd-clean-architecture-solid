@@ -4,9 +4,10 @@ import Button from "@/presentation/components/button";
 import Styles from './error-style.scss'
 
 export const Error = () => {
-  const { error, reload, setReload } = useContext(SurveyContext);
+  const { error, setError, reload, setReload } = useContext(SurveyContext);
 
   const handleClick = () => {
+    setError("");
     setReload(!reload);
   };
 
