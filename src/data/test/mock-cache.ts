@@ -4,7 +4,7 @@ import { GetStorage } from "../protocols/cache";
 
 export class GetStorageSpy implements GetStorage {
   key: string 
-  value = {
+  value: ObjectLiteral = {
     [faker.random.word()]: faker.random.word()
   }
 
