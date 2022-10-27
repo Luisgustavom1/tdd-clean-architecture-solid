@@ -31,26 +31,43 @@ describe('AuthorizeHttpGetClientDecorator', () => {
 
   it('Should not add header if storage is invalid', async () => {
     const { sut, httpGetClientSpy } = makeSut()
-    const httpRequestInvalid: HttpGetParams = {
+    const httpRequest: HttpGetParams = {
       url: faker.internet.url(),
       headers: {
         field: faker.random.words()
       }
     } 
-    await sut.get(httpRequestInvalid)
-    expect(httpGetClientSpy.url).toBe(httpRequestInvalid.url)
-    expect(httpGetClientSpy.headers).toBe(httpRequestInvalid.headers)
+    await sut.get(httpRequest)
+    expect(httpGetClientSpy.url).toBe(httpRequest.url)
+    expect(httpGetClientSpy.headers).toBe(httpRequest.headers)
   })
 
   it('Should add headers to HttpGetClient', async () => {
     const { sut, httpGetClientSpy, getStorageSpy } = makeSut()
     getStorageSpy.value = mockAccountModel()
-    const httpRequestInvalid: HttpGetParams = {
+    const httpRequest: HttpGetParams = {
       url: faker.internet.url(),
     } 
-    await sut.get(httpRequestInvalid)
-    expect(httpGetClientSpy.url).toBe(httpRequestInvalid.url)
+    await sut.get(httpRequest)
+    expect(httpGetClientSpy.url).toBe(httpRequest.url)
     expect(httpGetClientSpy.headers).toEqual({
+      'x-access-token': getStorageSpy.value.accessToken
+    })
+  })
+
+  it('Should merge headers to HttpGetClient', async () => {
+    const { sut, httpGetClientSpy, getStorageSpy } = makeSut()
+    getStorageSpy.value = mockAccountModel()
+    const httpRequest: HttpGetParams = {
+      url: faker.internet.url(),
+      headers: {
+        field: faker.random.words()
+      }
+    } 
+    await sut.get(httpRequest)
+    expect(httpGetClientSpy.url).toBe(httpRequest.url)
+    expect(httpGetClientSpy.headers).toEqual({
+      ...httpRequest.headers,
       'x-access-token': getStorageSpy.value.accessToken
     })
   })
