@@ -1,5 +1,9 @@
 import { AccountModel } from "../model";
 
 export interface UpdateCurrentAccount {
-  save: (accessToken: AccountModel) => Promise<void>
+  save: (accessToken: UpdateCurrentAccount.Params) => Promise<void>
+}
+
+export namespace UpdateCurrentAccount {
+  export type Params = AccountModel
 }

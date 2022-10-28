@@ -1,4 +1,4 @@
-import { mockAccountModel } from "@/domain/test/mock-add-account"
+import { mockAccountModel } from "@/domain/test"
 import { faker } from "@faker-js/faker"
 import 'jest-localstorage-mock'
 import { LocalStorageAdapter } from "./local-storage-adapter"

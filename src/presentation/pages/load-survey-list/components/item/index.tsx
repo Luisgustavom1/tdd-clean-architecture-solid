@@ -1,10 +1,10 @@
-import { SurveyModel } from "@/domain/model";
+import { LoadSurveyList } from "@/domain/usecases";
 import { Icon, IconName } from "@/presentation/components/icon";
 import React from "react";
 import Styles from "./list-item.scss";
 
 type Props = {
-  survey: SurveyModel;
+  survey: LoadSurveyList.Model;
 };
 
 export const SurveyItem = ({ survey }: Props) => {

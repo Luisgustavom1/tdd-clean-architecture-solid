@@ -13,11 +13,11 @@ import { InvalidCredentialsError } from "@/domain/errors";
 import { Helper, ValidationStub, AuthenticationSpy } from "@/presentation/test";
 import { act } from "react-dom/test-utils";
 import { ApiContext } from "@/presentation/contexts";
-import { AccountModel } from "@/domain/model";
+import { Authentication } from "@/domain/usecases";
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy;
-  setCurrentAccountMock: (account: AccountModel) => void;
+  setCurrentAccountMock: (account: Authentication.Model) => void;
 };
 
 type SutParams = {

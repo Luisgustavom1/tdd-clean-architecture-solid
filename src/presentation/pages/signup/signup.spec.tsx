@@ -13,11 +13,11 @@ import { Helper, AddAccountSpy, ValidationStub } from "@/presentation/test";
 import { faker } from "@faker-js/faker";
 import { InvalidCredentialsError } from "@/domain/errors";
 import { ApiContext } from "@/presentation/contexts";
-import { AccountModel } from "@/domain/model";
+import { AddAccount } from "@/domain/usecases";
 
 type SutTypes = {
   addAccountSpy: AddAccountSpy;
-  setCurrentAccountMock: (value: AccountModel) => void;
+  setCurrentAccountMock: (value: AddAccount.Model) => void;
 };
 
 type SutParams = {

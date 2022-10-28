@@ -1,4 +1,3 @@
-import { SurveyModel } from "@/domain/model";
 import { LoadSurveyList } from "@/domain/usecases";
 import Footer from "@/presentation/components/footer";
 import Header from "@/presentation/components/header";
@@ -13,7 +12,7 @@ type Props = {
 };
 
 const SurveyList = ({ loadSurveyList }: Props) => {
-  const [surveys, setSurveys] = useState<SurveyModel[]>([]);
+  const [surveys, setSurveys] = useState<LoadSurveyList.Model[]>([]);
   const [error, setError] = useState("");
   const [reload, setReload] = useState(false);
 

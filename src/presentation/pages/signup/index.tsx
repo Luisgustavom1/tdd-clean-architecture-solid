@@ -10,7 +10,7 @@ import Context from "@/presentation/contexts/form/form-context";
 import Styles from "./signup-style.scss";
 import Spinner from "@/presentation/components/spinner";
 import { Validation } from "@/presentation/protocols/validations";
-import { UpdateCurrentAccount, AddAccount } from "@/domain/usecases";
+import { AddAccount } from "@/domain/usecases";
 import { ApiContext } from "@/presentation/contexts";
 
 type ValuesProps = {
@@ -32,15 +32,12 @@ type StateErrorsProps = UnionToIntersection<
   }[keyof ValuesProps]
 >;
 
-type LoginProps = {
+type SignUpProps = {
   validation: Validation;
   addAccount: AddAccount;
 };
 
-const SignUp = ({
-  validation,
-  addAccount,
-}: LoginProps) => {
+const SignUp = ({ validation, addAccount }: SignUpProps) => {
   const { setCurrentAccount } = useContext(ApiContext);
   const history = useHistory();
   const [isFormInvalid, setisFormInvalid] = React.useState(true);

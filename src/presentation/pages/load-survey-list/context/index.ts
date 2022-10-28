@@ -1,8 +1,8 @@
-import { SurveyModel } from "@/domain/model";
+import { LoadSurveyList } from "@/domain/usecases";
 import React from "react";
 
 interface ISurveyContext {
-  surveys: SurveyModel[]
+  surveys: LoadSurveyList.Model[]
   error: string
   setError: React.Dispatch<React.SetStateAction<string>>
   reload: boolean
