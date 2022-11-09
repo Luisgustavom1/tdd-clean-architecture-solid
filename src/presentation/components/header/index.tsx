@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 const Header = () => {
   const history = useHistory();
-  const { setCurrentAccount } = useContext(ApiContext);
+  const { setCurrentAccount, getCurrentAccount } = useContext(ApiContext);
   const logout = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     setCurrentAccount(undefined);
@@ -18,7 +18,7 @@ const Header = () => {
         <Logo />
 
         <div className={Styles.logoutWrap}>
-          <span>LUISAO O + BRABO</span>
+          <span data-testid="username">{getCurrentAccount().name}</span>
           <a href="#" onClick={logout}>
             Sair
           </a>
