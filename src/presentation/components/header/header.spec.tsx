@@ -4,12 +4,18 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import Header from ".";
 import { Router } from "react-router-dom";
+import { mockAccountModel } from "@/domain/test";
 
-const makeSut = () => {
+const makeSut = (account = mockAccountModel()) => {
   const history = createMemoryHistory({ initialEntries: ["/"] });
   const setCurrentAccountMock = jest.fn();
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountMock,
+        getCurrentAccount: () => account,
+      }}
+    >
       <Router history={history}>
         <Header />
       </Router>
@@ -18,15 +24,21 @@ const makeSut = () => {
 
   return {
     history,
-    setCurrentAccountMock
-  }
-}
+    setCurrentAccountMock,
+  };
+};
 
 describe("<Header />", () => {
   it("Should call setCurrentAccount with null", () => {
-    const { history, setCurrentAccountMock } = makeSut()
+    const { history, setCurrentAccountMock } = makeSut();
     fireEvent.click(screen.getByText("Sair"));
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
     expect(history.location.pathname).toBe("/login");
+  });
+
+  it("Should render username correctly", () => {
+    const account = mockAccountModel()
+    makeSut(account);
+    expect(screen.getByTestId("username").textContent).toBe(account.name);
   });
 });
