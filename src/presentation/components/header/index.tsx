@@ -18,7 +18,7 @@ const Header = () => {
         <Logo />
 
         <div className={Styles.logoutWrap}>
-          <span data-testid="username">{getCurrentAccount().name}</span>
+          <span data-testid="username">{getCurrentAccount()?.name}</span>
           <a href="#" onClick={logout}>
             Sair
           </a>
