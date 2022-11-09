@@ -1,8 +1,17 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
+import { ApiContext } from "@/presentation/contexts";
 import Logo from "../logo";
 import Styles from "./styles.scss";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
+  const history = useHistory();
+  const { setCurrentAccount } = useContext(ApiContext);
+  const logout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setCurrentAccount(undefined);
+    history.replace("/login");
+  };
   return (
     <header className={Styles.headerWrap}>
       <div className={Styles.headerContent}>
@@ -10,7 +19,9 @@ const Header = () => {
 
         <div className={Styles.logoutWrap}>
           <span>LUISAO O + BRABO</span>
-          <a href="#">Sair</a>
+          <a href="#" onClick={logout}>
+            Sair
+          </a>
         </div>
       </div>
     </header>
