@@ -4,6 +4,7 @@ import React from "react";
 import { LoadSurveyList } from "@/domain/usecases";
 import { mockSurveyListModel } from "@/domain/test";
 import { UnexpectedError } from "@/domain/errors";
+import { ApiContext } from "@/presentation/contexts";
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0;
@@ -20,7 +21,11 @@ type SutTypes = {
 };
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
-  render(<SurveyList loadSurveyList={loadSurveyListSpy} />);
+  render(
+    <ApiContext.Provider value={{ setCurrentAccount: jest.fn() }}>
+      <SurveyList loadSurveyList={loadSurveyListSpy} />
+    </ApiContext.Provider>
+  );
 
   return {
     loadSurveyListSpy,
