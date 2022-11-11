@@ -7,6 +7,7 @@ import { AccessDeniedError, UnexpectedError } from "@/domain/errors";
 import { ApiContext } from "@/presentation/contexts";
 import { createMemoryHistory, MemoryHistory } from "history";
 import { AccountModel } from "@/domain/model";
+import { act } from "react-dom/test-utils";
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0;
@@ -90,8 +91,9 @@ describe("SurveyList Component", () => {
     jest
       .spyOn(loadSurveyListSpy, "loadAll")
       .mockRejectedValueOnce(new UnexpectedError());
-    makeSut(loadSurveyListSpy);
-    await waitFor(() => screen.getByRole("heading"));
+    await act(async () => {
+      makeSut(loadSurveyListSpy);
+    });
     fireEvent.click(
       await screen.findByRole("button", { name: /tentar novamente/i })
     );
