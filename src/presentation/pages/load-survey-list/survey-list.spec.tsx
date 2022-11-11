@@ -3,8 +3,10 @@ import SurveyList from "./survey-list";
 import React from "react";
 import { LoadSurveyList } from "@/domain/usecases";
 import { mockAccountModel, mockSurveyListModel } from "@/domain/test";
-import { UnexpectedError } from "@/domain/errors";
+import { AccessDeniedError, UnexpectedError } from "@/domain/errors";
 import { ApiContext } from "@/presentation/contexts";
+import { createMemoryHistory, MemoryHistory } from "history";
+import { AccountModel } from "@/domain/model";
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0;
@@ -18,13 +20,17 @@ class LoadSurveyListSpy implements LoadSurveyList {
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy;
+  history: MemoryHistory;
+  setCurrentAccount: (account: AccountModel) => void;
 };
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
+  const history = createMemoryHistory({ initialEntries: ["/"] });
+  const setCurrentAccount = jest.fn();
   render(
     <ApiContext.Provider
       value={{
-        setCurrentAccount: jest.fn(),
+        setCurrentAccount,
         getCurrentAccount: () => mockAccountModel(),
       }}
     >
@@ -34,6 +40,8 @@ const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
 
   return {
     loadSurveyListSpy,
+    history,
+    setCurrentAccount,
   };
 };
 
@@ -65,6 +73,16 @@ describe("SurveyList Component", () => {
     expect((await screen.findByTestId("error")).textContent).toBe(
       error.message
     );
+  });
+
+  it("Should logout on accessDeniedError", async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy();
+    jest
+      .spyOn(loadSurveyListSpy, "loadAll")
+      .mockRejectedValueOnce(new AccessDeniedError());
+    const { setCurrentAccount } = makeSut(loadSurveyListSpy);
+    await waitFor(() => screen.getByRole("heading"));
+    expect(setCurrentAccount).toHaveBeenCalledWith(undefined);
   });
 
   it("Should call loadSurveyList on reload", async () => {
