@@ -2,12 +2,7 @@ import React from "react";
 import { faker } from "@faker-js/faker";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import {
-  fireEvent,
-  render,
-  waitFor,
-  screen,
-} from "@testing-library/react";
+import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import Login from ".";
 import { InvalidCredentialsError } from "@/domain/errors";
 import { Helper, ValidationStub, AuthenticationSpy } from "@/presentation/test";
@@ -31,7 +26,12 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError;
   const setCurrentAccountMock = jest.fn();
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountMock,
+        getCurrentAccount: jest.fn(),
+      }}
+    >
       <Router history={history}>
         <Login validation={validationStub} authentication={authenticationSpy} />
       </Router>
