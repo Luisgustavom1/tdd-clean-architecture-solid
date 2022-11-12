@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import * as FormHelper from '../support/form-helper'
+import * as Helpers from '../support/helpers'
 import * as LoginMock from "../support/login-mocks";
 
 const simulateValidSubmit = () => {
@@ -43,14 +44,14 @@ describe('Login', () => {
     LoginMock.mockInvalidCredentialsError()
     simulateValidSubmit()
     FormHelper.testMainError('Credenciais inválidas')
-    FormHelper.testUrl('/login')
+    Helpers.testUrl('/login')
   })
 
   it('Should present UnexpectedError on 400', () => {
     LoginMock.mockUnexpectedError()
     simulateValidSubmit()
     FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em instantes')
-    FormHelper.testUrl('/login')
+    Helpers.testUrl('/login')
   })
 
   it('Should present save account if valid credentials are povided', () => {
@@ -58,15 +59,8 @@ describe('Login', () => {
     simulateValidSubmit()
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
-    FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('account')
-  })
-
-  it('Should present UnexpectedError if invalid data is returned', () => {
-    LoginMock.mockInvalidData()
-    simulateValidSubmit()
-    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em instantes')
-    FormHelper.testUrl('/login')
+    Helpers.testUrl('/')
+    Helpers.testLocalStorageItem('account')
   })
 
   it('Should prevent multiple submits', () => {
@@ -74,12 +68,12 @@ describe('Login', () => {
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit-form').dblclick()
-    FormHelper.testHttpCallCount(1)
+    Helpers.testHttpCallCount(1)
   })
 
   it('Should not call submit if form is invalid', () => {
     LoginMock.mockOk()
     cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
-    FormHelper.testHttpCallCount(0)
+    Helpers.testHttpCallCount(0)
   })
 })

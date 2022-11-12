@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import * as FormHelper from '../support/form-helper'
 import * as SignupMocks from "../support/signuo-mocks";
+import * as Helpers from '../support/helpers'
 
 const populateFields = () => {
   const pasword = faker.random.alphaNumeric(5)
@@ -57,21 +58,14 @@ describe('Signup', () => {
     SignupMocks.mockEmailInUserError()
     simulateValidSubmit()
     FormHelper.testMainError('O email já esta em uso, digite um diferente')
-    FormHelper.testUrl('/signup')
+    Helpers.testUrl('/signup')
   })
 
   it('Should present UnexpectedError on 400', () => {
     SignupMocks.mockUnexpectedError()
     simulateValidSubmit()
     FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em instantes')
-    FormHelper.testUrl('/signup')
-  })
-
-  it('Should present UnexpectedError if invalid data is returned', () => {
-    SignupMocks.mockInvalidData()
-    simulateValidSubmit()
-    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em instantes')
-    FormHelper.testUrl('/signup')
+    Helpers.testUrl('/signup')
   })
 
   it('Should present save account if valid credentials are povided', () => {
@@ -79,20 +73,20 @@ describe('Signup', () => {
     simulateValidSubmit()
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
-    FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('account')
+    Helpers.testUrl('/')
+    Helpers.testLocalStorageItem('account')
   })
 
   it('Should prevent multiple submits', () => {
     SignupMocks.mockOk()
     populateFields()
     cy.getByTestId('submit-form').dblclick()
-    FormHelper.testHttpCallCount(1)
+    Helpers.testHttpCallCount(1)
   })
 
   it('Should not call submit if form is invalid', () => {
     SignupMocks.mockOk()
     cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
-    FormHelper.testHttpCallCount(0)
+    Helpers.testHttpCallCount(0)
   })
 })

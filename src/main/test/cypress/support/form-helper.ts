@@ -1,5 +1,3 @@
-const baseUrl = Cypress.config().baseUrl
-
 export const testInputError = (inputName: string, error: string) => {
   cy.getByTestId(`${inputName}-error`).contains(error)
 }
@@ -10,14 +8,3 @@ export const testMainError = (error: string) => {
       .getByTestId('main-error').contains(error)
 }
 
-export const testHttpCallCount = (count: number) => {
-  cy.get('@request.all').should('have.length', count)
-}
-
-export const testUrl = (url: string) => {
-  cy.url().should('eq', `${baseUrl}${url}`)
-}
-
-export const testLocalStorageItem = (key: string) => {
-  cy.window().then(w => assert.isOk(w.localStorage.getItem(key)))
-}
