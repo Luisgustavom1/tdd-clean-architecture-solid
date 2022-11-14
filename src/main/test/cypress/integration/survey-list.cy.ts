@@ -11,4 +11,9 @@ describe('SurveyList', () => {
     cy.visit('')
     cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em instantes')
   })
+  it('Should preset error on UnexpectedError', () => {
+    Http.mockAccessDeniedError()
+    cy.visit('')
+    Helper.testUrl('/login')
+  })
 })
