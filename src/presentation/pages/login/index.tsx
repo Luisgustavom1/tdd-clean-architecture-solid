@@ -31,7 +31,7 @@ type LoginProps = {
 const Login = ({ validation, authentication }: LoginProps) => {
   const { setCurrentAccount } = useContext(ApiContext)
   const history = useHistory();
-  const [isFormInvalid, setisFormInvalid] = React.useState(true);
+  const [isFormInvalid, setIsFormInvalid] = React.useState(true);
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
     emailError: "",
     passwordError: "",
@@ -61,12 +61,12 @@ const Login = ({ validation, authentication }: LoginProps) => {
     const emailError = validation.validate("email", formData);
     const passwordError = validation.validate("password", formData);
 
-    setStateErrors({
-      ...stateErrors,
+    setStateErrors((prevState) => ({
+      ...prevState,
       emailError,
       passwordError,
-    });
-    setisFormInvalid(!!(emailError || passwordError));
+    }));
+    setIsFormInvalid(!!(emailError || passwordError));
   }, [values.email, values.password]);
 
   return (

@@ -40,7 +40,7 @@ type SignUpProps = {
 const SignUp = ({ validation, addAccount }: SignUpProps) => {
   const { setCurrentAccount } = useContext(ApiContext);
   const history = useHistory();
-  const [isFormInvalid, setisFormInvalid] = React.useState(true);
+  const [isFormInvalid, setIsFormInvalid] = React.useState(true);
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
     nameError: "",
     emailError: "",
@@ -81,14 +81,14 @@ const SignUp = ({ validation, addAccount }: SignUpProps) => {
       "passwordConfirmation",
       values
     );
-    setStateErrors({
-      ...stateErrors,
+    setStateErrors(prevState => ({
+      ...prevState,
       nameError,
       emailError,
       passwordError,
       passwordConfirmationError,
-    });
-    setisFormInvalid(
+    }));
+    setIsFormInvalid(
       !!(emailError || passwordError || nameError || passwordConfirmationError)
     );
   }, [values.name, values.email, values.password, values.passwordConfirmation]);
