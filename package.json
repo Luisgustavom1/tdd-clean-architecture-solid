@@ -4,6 +4,7 @@
   "description": "Clean arquiteture with tdd",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "test": "jest --passWithNoTests --no-cache --runInBand",
@@ -58,6 +59,8 @@
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.27.2",
+    "express": "^4.18.2",
+    "express-history-api-fallback": "^2.2.1",
     "jest-environment-jsdom": "^28.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.2.0",
