@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import Styles from "./styles.scss";
 
 enum IconName {
@@ -15,6 +15,7 @@ export const Icon = ({ icon, className, ...rest }: IconProps) => {
   return (
     <div
       className={[Styles.container, iconColor, className].join(" ")}
+      data-testid={icon === IconName.thumbDown ? 'thumb-down-icon' : 'thumb-up-icon'}
       {...rest}
     >
       <img data-testid='icon' className={Styles.icon} src={icon} alt="" />
