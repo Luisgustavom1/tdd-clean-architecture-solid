@@ -1,6 +1,6 @@
-import { CompareFieldsError } from "@/validation/errors"
-import { faker } from "@faker-js/faker"
-import { CompareFieldsValidation } from "./compare-fields-validation"
+import { CompareFieldsError } from '@/validation/errors'
+import { faker } from '@faker-js/faker'
+import { CompareFieldsValidation } from './compare-fields-validation'
 
 const makeSut = (fieldName: string, fieldToCompare: string) => new CompareFieldsValidation(fieldName, fieldToCompare)
 

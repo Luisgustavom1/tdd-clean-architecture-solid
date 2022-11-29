@@ -16,15 +16,15 @@ describe('<Input />', () => {
   it('Should begin with readOnly', () => {
     makeSut()
 
-    expect((screen.getByRole('textbox') as HTMLInputElement).readOnly).toBeTruthy()
+    expect((screen.getByRole('textbox')).readOnly).toBeTruthy()
   })
 
   it('Should remove readOnly on focus', () => {
     makeSut()
-    
-    const input = screen.getByRole('textbox') as HTMLInputElement;
 
-    fireEvent.focus(input);
+    const input = screen.getByRole('textbox')
+
+    fireEvent.focus(input)
 
     expect(input.readOnly).toBeFalsy()
   })

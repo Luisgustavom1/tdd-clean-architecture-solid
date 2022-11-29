@@ -1,33 +1,33 @@
-import React from "react";
+import React from 'react'
 
-import Context from "@/presentation/contexts/form/form-context";
+import Context from '@/presentation/contexts/form/form-context'
 
-import Styles from "./styles.scss";
+import Styles from './styles.scss'
 
 type InputProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
+React.InputHTMLAttributes<HTMLInputElement>,
+HTMLInputElement
+>
 
 const Input = ({ ...props }: InputProps) => {
-  const { stateErrors, setValues, values } = React.useContext(Context);
-  const inputRef = React.useRef(null);
+  const { stateErrors, setValues, values } = React.useContext(Context)
+  const inputRef = React.useRef(null)
 
-  const error = stateErrors[`${props.name}Error`];
+  const error = stateErrors[`${props.name}Error`]
 
   const enableInput = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.target.readOnly = false;
-  };
+    e.target.readOnly = false
+  }
 
   const handleChange = (e: React.FocusEvent<HTMLInputElement>) => {
     setValues({
       ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
+      [e.target.name]: e.target.value
+    })
+  }
   return (
     <>
-      <div className={Styles["input-wrap"]}>
+      <div className={Styles['input-wrap']}>
         <input
           {...props}
           onChange={handleChange}
@@ -43,7 +43,7 @@ const Input = ({ ...props }: InputProps) => {
         {error}
       </span>
     </>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

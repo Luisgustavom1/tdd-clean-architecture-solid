@@ -11,7 +11,9 @@
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "test:cypress": "cypress open",
-    "check": "npm-check -u -s"
+    "check": "npm-check -u -s",
+    "lint": "eslint src/**",
+    "lint:fix": "eslint src/** --fix"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +37,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-standard": "^5.0.0",
     "git-commit-msg-linter": "^4.1.3",
     "html-webpack-plugin": "^5.5.0",

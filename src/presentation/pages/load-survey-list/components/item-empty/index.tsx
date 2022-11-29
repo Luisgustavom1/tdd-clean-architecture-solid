@@ -1,5 +1,5 @@
-import React from "react";
-import Styles from "./item-empty.scss";
+import React from 'react'
+import Styles from './item-empty.scss'
 
 export const SurveyItemEmpty = () => {
   return (
@@ -9,5 +9,5 @@ export const SurveyItemEmpty = () => {
       <li className={Styles.surveyItemEmpty}></li>
       <li className={Styles.surveyItemEmpty}></li>
     </>
-  );
-};
+  )
+}

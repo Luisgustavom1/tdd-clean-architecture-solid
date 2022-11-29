@@ -1,73 +1,73 @@
-import React, { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useContext } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
-import Button from "@/presentation/components/button";
-import Footer from "@/presentation/components/footer";
-import Header from "@/presentation/components/header";
-import Input from "@/presentation/components/input";
-import Spinner from "@/presentation/components/spinner";
-import Context from "@/presentation/contexts/form/form-context";
+import Button from '@/presentation/components/button'
+import Footer from '@/presentation/components/footer'
+import Header from '@/presentation/components/header'
+import Input from '@/presentation/components/input'
+import Spinner from '@/presentation/components/spinner'
+import Context from '@/presentation/contexts/form/form-context'
 
-import Styles from "./login-style.scss";
-import { Validation } from "@/presentation/protocols/validations";
-import { Authentication } from "@/domain/usecases";
-import { ApiContext } from "@/presentation/contexts";
+import Styles from './login-style.scss'
+import { Validation } from '@/presentation/protocols/validations'
+import { Authentication } from '@/domain/usecases'
+import { ApiContext } from '@/presentation/contexts'
 
 type ValuesProps = {
-  email: string;
-  password: string;
-};
+  email: string
+  password: string
+}
 
 type StateErrorsProps = {
-  emailError: string;
-  passwordError: string;
-};
+  emailError: string
+  passwordError: string
+}
 
 type LoginProps = {
-  validation: Validation;
-  authentication: Authentication;
-};
+  validation: Validation
+  authentication: Authentication
+}
 
 const Login = ({ validation, authentication }: LoginProps) => {
   const { setCurrentAccount } = useContext(ApiContext)
-  const history = useHistory();
-  const [isFormInvalid, setisFormInvalid] = React.useState(true);
+  const history = useHistory()
+  const [isFormInvalid, setisFormInvalid] = React.useState(true)
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
-    emailError: "",
-    passwordError: "",
-  });
-  const [mainError, setMainError] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
+    emailError: '',
+    passwordError: ''
+  })
+  const [mainError, setMainError] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(false)
   const [values, setValues] = React.useState<ValuesProps>({
-    email: "",
-    password: "",
-  });
+    email: '',
+    password: ''
+  })
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      if (isLoading || isFormInvalid) return;
+      if (isLoading || isFormInvalid) return
 
-      setIsLoading(true);
-      const account = await authentication.auth({ ...values });
-      setCurrentAccount(account);
-      history.replace("/");
+      setIsLoading(true)
+      const account = await authentication.auth({ ...values })
+      setCurrentAccount(account)
+      history.replace('/')
     } catch (error) {
-      setMainError(error.message);
-      setIsLoading(false);
+      setMainError(error.message)
+      setIsLoading(false)
     }
-  };
+  }
   React.useEffect(() => {
-    const formData = { ...values };
-    const emailError = validation.validate("email", formData);
-    const passwordError = validation.validate("password", formData);
+    const formData = { ...values }
+    const emailError = validation.validate('email', formData)
+    const passwordError = validation.validate('password', formData)
 
     setStateErrors({
       ...stateErrors,
       emailError,
-      passwordError,
-    });
-    setisFormInvalid(!!(emailError || passwordError));
-  }, [values.email, values.password]);
+      passwordError
+    })
+    setisFormInvalid(!!(emailError || passwordError))
+  }, [values.email, values.password])
 
   return (
     <div className={Styles.loginWrap}>
@@ -108,8 +108,8 @@ const Login = ({ validation, authentication }: LoginProps) => {
 
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export type { StateErrorsProps, ValuesProps };
-export default Login;
+export type { StateErrorsProps, ValuesProps }
+export default Login

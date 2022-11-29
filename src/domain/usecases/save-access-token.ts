@@ -1,4 +1,4 @@
-import { AccountModel } from "../model";
+import { AccountModel } from '../model'
 
 export interface UpdateCurrentAccount {
   save: (accessToken: UpdateCurrentAccount.Params) => Promise<void>

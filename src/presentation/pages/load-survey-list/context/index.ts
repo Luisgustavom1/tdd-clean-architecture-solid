@@ -1,5 +1,5 @@
-import { LoadSurveyList } from "@/domain/usecases";
-import React from "react";
+import { LoadSurveyList } from '@/domain/usecases'
+import React from 'react'
 
 interface ISurveyContext {
   surveys: LoadSurveyList.Model[]
@@ -9,6 +9,6 @@ interface ISurveyContext {
   setReload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SurveyContext = React.createContext<ISurveyContext>(null);
+const SurveyContext = React.createContext<ISurveyContext>(null)
 
 export { SurveyContext }

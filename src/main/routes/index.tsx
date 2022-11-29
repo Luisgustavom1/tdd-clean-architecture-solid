@@ -1,23 +1,23 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import "@/presentation/styles/global.scss";
-import { makeLogin } from "@/main/factories/pages/login/login-factory";
-import { ApiContext } from "@/presentation/contexts";
-import { makeSignup } from "@/main/factories/pages/signup/singup-factory";
+import '@/presentation/styles/global.scss'
+import { makeLogin } from '@/main/factories/pages/login/login-factory'
+import { ApiContext } from '@/presentation/contexts'
+import { makeSignup } from '@/main/factories/pages/signup/singup-factory'
 import {
   getCurrentAccountAdapter,
-  setCurrentAccountAdapter,
-} from "../adapters/current-account-adapter";
-import { PrivateRoute } from "@/presentation/components/private-route/private-route";
-import { makeSurveyList } from "../factories/pages/survey-list/survey-list-factory";
+  setCurrentAccountAdapter
+} from '../adapters/current-account-adapter'
+import { PrivateRoute } from '@/presentation/components/private-route/private-route'
+import { makeSurveyList } from '../factories/pages/survey-list/survey-list-factory'
 
 const Router = () => {
   return (
     <ApiContext.Provider
       value={{
         setCurrentAccount: setCurrentAccountAdapter,
-        getCurrentAccount: getCurrentAccountAdapter,
+        getCurrentAccount: getCurrentAccountAdapter
       }}
     >
       <BrowserRouter>
@@ -28,7 +28,7 @@ const Router = () => {
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>
-  );
-};
+  )
+}
 
-export default Router;
+export default Router

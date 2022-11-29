@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { LoadSurveyList } from "@/domain/usecases";
-import Footer from "@/presentation/components/footer";
-import Header from "@/presentation/components/header";
-import { useErrorHandler } from "@/presentation/hooks";
-import { Error } from "./components/error";
-import { SurveyItemList } from "./components/list";
-import { SurveyContext } from "./context";
-import Styles from "./survey-list-styles.scss";
+import React, { useEffect, useState } from 'react'
+import { LoadSurveyList } from '@/domain/usecases'
+import Footer from '@/presentation/components/footer'
+import Header from '@/presentation/components/header'
+import { useErrorHandler } from '@/presentation/hooks'
+import { Error } from './components/error'
+import { SurveyItemList } from './components/list'
+import { SurveyContext } from './context'
+import Styles from './survey-list-styles.scss'
 
 type Props = {
-  loadSurveyList: LoadSurveyList;
-};
+  loadSurveyList: LoadSurveyList
+}
 
 const SurveyList = ({ loadSurveyList }: Props) => {
-  const handleError = useErrorHandler((error) => setError(error.message));
-  const [surveys, setSurveys] = useState<LoadSurveyList.Model[]>([]);
-  const [error, setError] = useState("");
-  const [reload, setReload] = useState(false);
+  const handleError = useErrorHandler((error) => setError(error.message))
+  const [surveys, setSurveys] = useState<LoadSurveyList.Model[]>([])
+  const [error, setError] = useState('')
+  const [reload, setReload] = useState(false)
 
   useEffect(() => {
     loadSurveyList
       .loadAll()
       .then((surveys) => {
-        setSurveys(surveys);
+        setSurveys(surveys)
       })
-      .catch((error) => handleError(error));
-  }, [reload]);
+      .catch((error) => handleError(error))
+  }, [reload])
   return (
     <div className={Styles.surveyListWrap}>
       <Header />
@@ -41,6 +41,6 @@ const SurveyList = ({ loadSurveyList }: Props) => {
 
       <Footer />
     </div>
-  );
-};
-export default SurveyList;
+  )
+}
+export default SurveyList

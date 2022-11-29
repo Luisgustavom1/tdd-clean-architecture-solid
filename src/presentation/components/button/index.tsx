@@ -1,9 +1,9 @@
-import React, { ComponentPropsWithoutRef, ReactNode } from "react"
-import Styles from './styles.scss';
+import React, { ComponentPropsWithoutRef, ReactNode } from 'react'
+import Styles from './styles.scss'
 
 interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
-    children: ReactNode;
-    variant: 'outlined' | 'filled'
+  children: ReactNode
+  variant: 'outlined' | 'filled'
 }
 
 const Button = ({ children, variant, ...rest }: ButtonProps) => (
@@ -12,4 +12,4 @@ const Button = ({ children, variant, ...rest }: ButtonProps) => (
     </button>
 )
 
-export default Button;
+export default Button

@@ -16,4 +16,3 @@ export namespace LoadSurveyList {
     answer: string
   }
 }
-

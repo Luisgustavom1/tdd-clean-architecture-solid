@@ -1,7 +1,7 @@
-import { SetStorageMock } from "@/data/test/mock-storage"
-import { UnexpectedError } from "@/domain/errors"
-import { mockAccountModel } from "@/domain/test"
-import { LocalUpdateCurrentAccount } from "./local-update-current-account"
+import { SetStorageMock } from '@/data/test/mock-storage'
+import { UnexpectedError } from '@/domain/errors'
+import { mockAccountModel } from '@/domain/test'
+import { LocalUpdateCurrentAccount } from './local-update-current-account'
 
 type SutTypes = {
   sut: LocalUpdateCurrentAccount

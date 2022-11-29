@@ -1,97 +1,97 @@
-import React, { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useContext } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
-import Button from "@/presentation/components/button";
-import Footer from "@/presentation/components/footer";
-import Header from "@/presentation/components/header";
-import Input from "@/presentation/components/input";
-import Context from "@/presentation/contexts/form/form-context";
+import Button from '@/presentation/components/button'
+import Footer from '@/presentation/components/footer'
+import Header from '@/presentation/components/header'
+import Input from '@/presentation/components/input'
+import Context from '@/presentation/contexts/form/form-context'
 
-import Styles from "./signup-style.scss";
-import Spinner from "@/presentation/components/spinner";
-import { Validation } from "@/presentation/protocols/validations";
-import { AddAccount } from "@/domain/usecases";
-import { ApiContext } from "@/presentation/contexts";
+import Styles from './signup-style.scss'
+import Spinner from '@/presentation/components/spinner'
+import { Validation } from '@/presentation/protocols/validations'
+import { AddAccount } from '@/domain/usecases'
+import { ApiContext } from '@/presentation/contexts'
 
 type ValuesProps = {
-  name: string;
-  email: string;
-  passwordConfirmation: string;
-  password: string;
-};
+  name: string
+  email: string
+  passwordConfirmation: string
+  password: string
+}
 
 type UnionToIntersection<T> = (T extends any ? (k: T) => void : never) extends (
   k: infer I
 ) => void
   ? I
-  : never;
+  : never
 
 type StateErrorsProps = UnionToIntersection<
-  {
-    [K in keyof ValuesProps]: Record<`${K}Error`, string>;
-  }[keyof ValuesProps]
->;
+{
+  [K in keyof ValuesProps]: Record<`${K}Error`, string>;
+}[keyof ValuesProps]
+>
 
 type SignUpProps = {
-  validation: Validation;
-  addAccount: AddAccount;
-};
+  validation: Validation
+  addAccount: AddAccount
+}
 
 const SignUp = ({ validation, addAccount }: SignUpProps) => {
-  const { setCurrentAccount } = useContext(ApiContext);
-  const history = useHistory();
-  const [isFormInvalid, setisFormInvalid] = React.useState(true);
+  const { setCurrentAccount } = useContext(ApiContext)
+  const history = useHistory()
+  const [isFormInvalid, setisFormInvalid] = React.useState(true)
   const [stateErrors, setStateErrors] = React.useState<StateErrorsProps>({
-    nameError: "",
-    emailError: "",
-    passwordError: "Campo obrigatório",
-    passwordConfirmationError: "Campo obrigatório",
-  });
-  const [mainError, setMainError] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
+    nameError: '',
+    emailError: '',
+    passwordError: 'Campo obrigatório',
+    passwordConfirmationError: 'Campo obrigatório'
+  })
+  const [mainError, setMainError] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(false)
   const [values, setValues] = React.useState<ValuesProps>({
-    name: "",
-    email: "",
-    password: "",
-    passwordConfirmation: "",
-  });
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+  })
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       if (isLoading || isFormInvalid) {
-        return;
+        return
       }
-      const account = await addAccount.add(values);
-      setCurrentAccount(account);
-      history.replace("/");
+      const account = await addAccount.add(values)
+      setCurrentAccount(account)
+      history.replace('/')
     } catch (error) {
-      setMainError(error.message);
-      setIsLoading(false);
+      setMainError(error.message)
+      setIsLoading(false)
     }
-  };
+  }
 
   React.useEffect(() => {
-    const formData = { ...values };
-    const nameError = validation.validate("name", formData);
-    const emailError = validation.validate("email", formData);
-    const passwordError = validation.validate("password", formData);
+    const formData = { ...values }
+    const nameError = validation.validate('name', formData)
+    const emailError = validation.validate('email', formData)
+    const passwordError = validation.validate('password', formData)
     const passwordConfirmationError = validation.validate(
-      "passwordConfirmation",
+      'passwordConfirmation',
       values
-    );
+    )
     setStateErrors({
       ...stateErrors,
       nameError,
       emailError,
       passwordError,
-      passwordConfirmationError,
-    });
+      passwordConfirmationError
+    })
     setisFormInvalid(
       !!(emailError || passwordError || nameError || passwordConfirmationError)
-    );
-  }, [values.name, values.email, values.password, values.passwordConfirmation]);
+    )
+  }, [values.name, values.email, values.password, values.passwordConfirmation])
   return (
     <div className={Styles.signupWrap}>
       <Header />
@@ -137,7 +137,7 @@ const SignUp = ({ validation, addAccount }: SignUpProps) => {
 
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

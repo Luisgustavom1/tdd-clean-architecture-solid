@@ -1,9 +1,9 @@
-import { faker } from "@faker-js/faker"
-import { HttpGetClientSpy } from "@/data/test/mock-http-get-client"
-import { RemoteLoadSurveyList } from "./remote-load-survey-list"
-import { HttpStatusCode } from "@/data/protocols/http"
-import { AccessDeniedError, UnexpectedError } from "@/domain/errors"
-import { mockSurveyListModel } from "@/data/test"
+import { faker } from '@faker-js/faker'
+import { HttpGetClientSpy } from '@/data/test/mock-http-get-client'
+import { RemoteLoadSurveyList } from './remote-load-survey-list'
+import { HttpStatusCode } from '@/data/protocols/http'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+import { mockSurveyListModel } from '@/data/test'
 
 type SutTypes = {
   sut: RemoteLoadSurveyList
@@ -80,7 +80,7 @@ describe('RemoteLoadSurveyList', () => {
   it('Should return a list of a SurveyModels if HttpGetClient returns 204', async () => {
     const { httpGetClientSpy } = makeSut()
     httpGetClientSpy.response = {
-      statusCode: HttpStatusCode.noContent,
+      statusCode: HttpStatusCode.noContent
     }
     expect(httpGetClientSpy.response.body).toBeFalsy()
   })

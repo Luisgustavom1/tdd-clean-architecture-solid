@@ -1,10 +1,10 @@
-import { SetStorage } from "../protocols/cache/set-storage"
+import { SetStorage } from '../protocols/cache/set-storage'
 
 export class SetStorageMock implements SetStorage {
   key: string
   value: any
 
-  set(key: string, value: never): void {
+  set (key: string, value: never): void {
     this.key = key
     this.value = value
   }

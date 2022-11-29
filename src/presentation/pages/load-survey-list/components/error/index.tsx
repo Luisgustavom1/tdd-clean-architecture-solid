@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { SurveyContext } from "@/presentation/pages/load-survey-list/context";
-import Button from "@/presentation/components/button";
+import React, { useContext } from 'react'
+import { SurveyContext } from '@/presentation/pages/load-survey-list/context'
+import Button from '@/presentation/components/button'
 import Styles from './error-style.scss'
 
 export const Error = () => {
-  const { error, setError, reload, setReload } = useContext(SurveyContext);
+  const { error, setError, reload, setReload } = useContext(SurveyContext)
 
   const handleClick = () => {
-    setError("");
-    setReload(!reload);
-  };
+    setError('')
+    setReload(!reload)
+  }
 
   return (
     <div className={Styles.errorWrap}>
@@ -18,5 +18,5 @@ export const Error = () => {
         Tentar novamente
       </Button>
     </div>
-  );
-};
+  )
+}
