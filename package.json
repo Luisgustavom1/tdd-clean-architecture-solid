@@ -13,8 +13,8 @@
     "test:ci": "npm test -- --coverage",
     "test:cypress": "cypress open",
     "check": "npm-check -u -s",
-    "lint": "eslint src/**",
-    "lint:fix": "eslint src/** --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",

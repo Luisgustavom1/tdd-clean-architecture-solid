@@ -19,7 +19,6 @@ describe('LocalStorageAdapter', () => {
   it('Should call localStorag.removeItem if value is null', () => {
     const sut = makeSut()
     const key = faker.database.column()
-    const value = mockAccountModel()
     sut.set(key, undefined)
     expect(localStorage.removeItem).toHaveBeenCalledWith(key)
   })

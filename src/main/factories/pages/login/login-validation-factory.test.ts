@@ -1,5 +1,4 @@
 import { EmailValidation, MinLengthValidation, RequireFieldValidation, ValidationComposite } from '@/validation/validators'
-import { ValidationBuilder } from '@/validation/validators/builder/validator-builder'
 import { makeLoginValidation } from './login-validation-factory'
 
 describe('Login', () => {

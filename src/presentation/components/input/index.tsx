@@ -4,12 +4,9 @@ import Context from '@/presentation/contexts/form/form-context'
 
 import Styles from './styles.scss'
 
-type InputProps = React.DetailedHTMLProps<
-React.InputHTMLAttributes<HTMLInputElement>,
-HTMLInputElement
->
+type InputProps = React.InputHTMLAttributes<HTMLInputElement>
 
-const Input = ({ ...props }: InputProps) => {
+const Input = (props: InputProps) => {
   const { stateErrors, setValues, values } = React.useContext(Context)
   const inputRef = React.useRef(null)
 

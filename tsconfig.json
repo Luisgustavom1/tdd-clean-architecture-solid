@@ -32,6 +32,6 @@
     "tests"
   ],
   "exclude": [
-    "src/main/test/cypress"
+    "src/main/test/cypress",
   ]
 }
