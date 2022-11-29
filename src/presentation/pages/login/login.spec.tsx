@@ -64,7 +64,7 @@ describe('<Login />', () => {
     Helper.testStatusForField('email', validationError)
     Helper.testStatusForField('password', validationError)
 
-    const submitForm = screen.getByTestId('submit-form')
+    const submitForm: HTMLButtonElement = screen.getByTestId('submit-form')
     expect(submitForm.disabled).toBe(true)
   })
 
@@ -98,7 +98,7 @@ describe('<Login />', () => {
     makeSut()
     Helper.populateField('password')
     Helper.populateField('email')
-    const submitButton = screen.getByTestId('submit-form')
+    const submitButton: HTMLButtonElement = screen.getByTestId('submit-form')
     expect(submitButton.disabled).toBe(false)
   })
 

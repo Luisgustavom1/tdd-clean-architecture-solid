@@ -28,7 +28,7 @@ const simulateValidSubmit = async (
   email = faker.internet.email(),
   name = faker.word.noun(),
   password = faker.internet.password()
-) => {
+): Promise<void> => {
   Helper.populateField('name', name)
   Helper.populateField('email', email)
   Helper.populateField('password', password)
@@ -46,7 +46,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError
   const addAccountSpy = new AddAccountSpy()
   const setCurrentAccountMock = jest.fn()
-  const sut = render(
+  render(
     <ApiContext.Provider
       value={{
         setCurrentAccount: setCurrentAccountMock,
@@ -74,7 +74,7 @@ describe('<SignUp />', () => {
     Helper.testStatusForField('password', validationError)
     Helper.testStatusForField('passwordConfirmation', validationError)
 
-    const submitForm = screen.getByTestId('submit-form')
+    const submitForm: HTMLButtonElement = screen.getByTestId('submit-form')
     expect(submitForm.disabled).toBe(true)
   })
 
@@ -136,7 +136,7 @@ describe('<SignUp />', () => {
     Helper.populateField('email')
     Helper.populateField('password')
     Helper.populateField('passwordConfirmation')
-    const submitButton = screen.getByTestId('submit-form')
+    const submitButton: HTMLButtonElement = screen.getByTestId('submit-form')
     expect(submitButton.disabled).toBe(false)
   })
 
