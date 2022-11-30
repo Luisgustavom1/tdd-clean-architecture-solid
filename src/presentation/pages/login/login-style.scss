@@ -3,12 +3,13 @@
 .loginWrap {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    justify-content: space-between;
+    min-height: 100vh;
 
     .form {
         display: flex;
         align-items: center;
-        flex-direction: column;        
+        flex-direction: column;   
         margin: 180px auto 0 auto;
         width: 380px;
         box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.17);
