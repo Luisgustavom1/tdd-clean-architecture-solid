@@ -10,8 +10,8 @@ import { AccountModel } from '@/domain/model'
 import { act } from 'react-dom/test-utils'
 
 class LoadSurveyListSpy implements LoadSurveyList {
-  callsCount = 0;
-  surveys = mockSurveyListModel();
+  callsCount = 0
+  surveys = mockSurveyListModel()
 
   async loadAll (): Promise<LoadSurveyList.Model[]> {
     this.callsCount++
