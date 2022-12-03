@@ -1,0 +1,22 @@
+version: 0.1
+phases:
+  pre_build:
+    commands:
+      - echo Installing dependencies...
+      - npm install -g pnpm
+      - pnpm install
+  build:
+    commands:
+      - echo Init build step `date`
+      - echo Run lint
+      - pnpm lint
+      - echo Run tests
+      - pnpm test
+      - echo Building
+      - pnpm build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
