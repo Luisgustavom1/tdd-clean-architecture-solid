@@ -9,4 +9,3 @@ hooks:
       timeout: 300
   ApplicationStart:
     - location: scripts/AppStart.sh
-      timeout: 60
