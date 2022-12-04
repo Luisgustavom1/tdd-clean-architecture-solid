@@ -1,1 +1,1 @@
-[![Known Vulnerabilities](https://snyk.io/test/github/Luisgustavom1/tdd-clean-architecture-solid/badge.svg)]
+![Known Vulnerabilities](https://snyk.io/test/github/Luisgustavom1/tdd-clean-architecture-solid/badge.svg)
