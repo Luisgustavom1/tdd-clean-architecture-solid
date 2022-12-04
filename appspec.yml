@@ -1,0 +1,8 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+hooks:
+  AfterInstall:
+    - location: scripts/AfterInstallHook.sh
+      timeout: 300
