@@ -7,7 +7,7 @@ export default defineConfig({
       const webpackPreprocessor = require('@cypress/webpack-preprocessor')
 
       const options = {
-        webpackOptions: require('./webpack.config'),
+        webpackOptions: require('./webpack.dev.js'),
         watchOptions: {},
       } 
 
@@ -16,7 +16,8 @@ export default defineConfig({
       return config
     },
     baseUrl: 'http://localhost:8080',
-    supportFile: 'src/main/test/cypress/support/**/*.js',
+    supportFile: 'src/main/test/cypress/support/e2e.js',
     specPattern: 'src/main/test/cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
+    video: false
   },
 })
