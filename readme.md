@@ -1,1 +1,1 @@
-MOCK -> Apenas capturando valores, não importanto com o que retorna
+MOCK -> Apenas capturando valores, não importanto com o que retorna.
