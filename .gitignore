@@ -7,3 +7,4 @@ new_user_credentials.csv
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+aws-services
