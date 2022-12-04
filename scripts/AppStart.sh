@@ -9,4 +9,4 @@ nvm use 16.18.1
 
 ls -a
 
-node ~/app/index.js
+node home/ec2-user/app/index.js
