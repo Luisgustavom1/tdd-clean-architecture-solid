@@ -14,7 +14,8 @@ export const Icon = ({ icon, className, ...rest }: IconProps) => {
   const iconColor = icon === IconName.thumbDown ? Styles.red : Styles.green
   return (
     <div
-      className={[Styles.container, iconColor, className].join(' ')}
+      className={[Styles.container, iconColor, className].join(" ")}
+      data-testid={icon === IconName.thumbDown ? 'thumb-down-icon' : 'thumb-up-icon'}
       {...rest}
     >
       <img data-testid='icon' className={Styles.icon} src={icon} alt="" />

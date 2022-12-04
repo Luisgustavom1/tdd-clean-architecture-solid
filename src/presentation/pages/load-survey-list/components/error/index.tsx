@@ -14,7 +14,7 @@ export const Error = () => {
   return (
     <div className={Styles.errorWrap}>
       <span data-testid="error">{error}</span>
-      <Button variant="filled" onClick={handleClick}>
+      <Button variant="filled" data-testid='reload' onClick={handleClick}>
         Tentar novamente
       </Button>
     </div>

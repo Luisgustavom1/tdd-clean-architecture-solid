@@ -1,7 +1,6 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  fixturesFolder: false,
   e2e: {
     setupNodeEvents(on, config) {
       const webpackPreprocessor = require('@cypress/webpack-preprocessor')
@@ -12,7 +11,7 @@ export default defineConfig({
       } 
 
       on('file:preprocessor', webpackPreprocessor(options))
-
+      
       return config
     },
     baseUrl: 'http://localhost:8080',

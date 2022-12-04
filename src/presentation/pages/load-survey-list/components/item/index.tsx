@@ -9,7 +9,7 @@ type Props = {
 
 export const SurveyItem = ({ survey }: Props) => {
   return (
-    <div data-testid='survey-item' className={Styles.surveyItemWrap}>
+    <li data-testid='survey-item' className={Styles.surveyItemWrap}>
       <div className={Styles.surveyContent}>
         <Icon
           className={Styles.iconWrap}
@@ -31,6 +31,6 @@ export const SurveyItem = ({ survey }: Props) => {
         <p data-testid="question">{survey.question}</p>
       </div>
       <footer>Ver Resultado</footer>
-    </div>
-  )
-}
+    </li>
+  );
+};
