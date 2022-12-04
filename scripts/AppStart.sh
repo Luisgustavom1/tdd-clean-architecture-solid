@@ -7,4 +7,6 @@ export NVM_DIR="$HOME/.nvm"
 nvm install 16.18.1
 nvm use 16.18.1
 
-node app/index.js
+ls -a
+
+node ~/app/index.js
