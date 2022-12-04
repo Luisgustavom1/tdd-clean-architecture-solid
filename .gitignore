@@ -2,6 +2,7 @@ node_modules
 .env
 coverage
 dist
+/cypress
 new_user_credentials.csv
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
