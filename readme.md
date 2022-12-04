@@ -1,1 +1,1 @@
-MOCK -> Apenas capturando valores, não importanto com o que retorna.
+[![Known Vulnerabilities](https://snyk.io/test/github/Luisgustavom1/tdd-clean-architecture-solid/badge.svg)]
