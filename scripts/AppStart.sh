@@ -8,7 +8,7 @@ nvm install 16.18.1
 nvm use 16.18.1
 npm install -g pnpm
 
-ls -a home/ec2-user/app
+cd ./home/ec2-user/app
 
 pnpm build
 
