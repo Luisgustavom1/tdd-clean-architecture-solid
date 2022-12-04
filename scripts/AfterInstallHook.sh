@@ -1,11 +1,9 @@
 #!/bin/bash
 set -e
 
-# preparing setup
-sudo apt-get install wget
-
 # install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
 
 # install node version
 nvm install 16.18.1
