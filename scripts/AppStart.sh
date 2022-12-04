@@ -6,7 +6,10 @@ export NVM_DIR="$HOME/.nvm"
 
 nvm install 16.18.1
 nvm use 16.18.1
+npm install -g pnpm
 
-ls -a
+ls -a home/ec2-user/app
+
+pnpm build
 
 node home/ec2-user/app/index.js
