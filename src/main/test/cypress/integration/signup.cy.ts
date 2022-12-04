@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import * as FormHelper from '../support/form-helper'
-import * as SignupMocks from "../support/signuo-mocks";
+import * as SignupMocks from "../support/signup-mocks";
 
 const populateFields = () => {
   const pasword = faker.random.alphaNumeric(5)
