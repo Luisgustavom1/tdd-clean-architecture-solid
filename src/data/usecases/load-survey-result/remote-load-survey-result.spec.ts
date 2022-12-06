@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadSurveyResult } from '@/data/usecases/load-survey-result/remote-load-survey-result'
-import { AccessDeniedError } from '@/domain/errors'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 
 const makeSut = (url: string = faker.internet.url()) => {
   const httpGetClientSpy = new HttpGetClientSpy()
@@ -29,5 +29,14 @@ describe('RemoteLoadSurveyResult', () => {
     }
     const promise = sut.load()
     await expect(promise).rejects.toThrow(new AccessDeniedError())
+  })
+
+  it('Should throe UnexpectedError if HttpGetClient returns 404', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.notFound
+    }
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })
