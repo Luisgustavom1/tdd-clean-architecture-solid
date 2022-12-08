@@ -4,7 +4,7 @@ import Button from '@/presentation/components/button'
 import Footer from '@/presentation/components/footer'
 import Header from '@/presentation/components/header'
 import Styles from './survey-result-styles.scss'
-import Spinner from '@/presentation/components/spinner'
+import { Loading } from '@/presentation/components/loading'
 
 export const SurveyResult = () => {
   return (
@@ -31,12 +31,7 @@ export const SurveyResult = () => {
           </li>
         </FlipMove>
         <Button variant='filled'>Voltar</Button>
-        <div className={Styles.loadingWrap}>
-         <div className={Styles.loading}>
-          <p>Aguarde...</p>
-          <Spinner></Spinner>
-         </div>
-        </div>
+        {true && <Loading />}
       </section>
 
       <Footer />
