@@ -7,6 +7,7 @@ import { useLogout } from '@/presentation/hooks'
 const Header = () => {
   const logout = useLogout()
   const { getCurrentAccount } = useContext(ApiContext)
+  const currentAccount = getCurrentAccount()
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     logout()
@@ -16,12 +17,12 @@ const Header = () => {
       <div className={Styles.headerContent}>
         <Logo />
 
-        <div className={Styles.logoutWrap}>
-          <span data-testid="username">{getCurrentAccount()?.name}</span>
+        {currentAccount && <div className={Styles.logoutWrap}>
+          <span data-testid="username">{currentAccount?.name}</span>
           <a href="#" data-testid="logout" onClick={handleClick}>
             Sair
           </a>
-        </div>
+        </div>}
       </div>
     </header>
   )
