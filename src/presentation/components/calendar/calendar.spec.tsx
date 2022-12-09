@@ -15,7 +15,7 @@ describe('Calendar component', () => {
   })
 
   it('Should render with correct values', () => {
-    makeSut(new Date('2022-01-10T00:00:00'))
+    makeSut(new Date('2019-05-05T00:00:00'))
     expect(screen.getByTestId('day').textContent).toBe('05')
     expect(screen.getByTestId('month').textContent).toBe('mai')
     expect(screen.getByTestId('year').textContent).toBe('2019')
