@@ -1,4 +1,5 @@
 import { LoadSurveyList } from '@/domain/usecases'
+import { Calendar } from '@/presentation/components/calendar'
 import { Icon, IconName } from '@/presentation/components/icon'
 import React from 'react'
 import Styles from './list-item.scss'
@@ -15,22 +16,10 @@ export const SurveyItem = ({ survey }: Props) => {
           className={Styles.iconWrap}
           icon={survey.didAnswer ? IconName.thumbUp : IconName.thumbDown}
         />
-        <time>
-          <span data-testid="day" className={Styles.day}>
-            {survey.date.getDate().toString().padStart(2, '0')}
-          </span>
-          <span data-testid="month" className={Styles.month}>
-            {survey.date
-              .toLocaleString('pt-BR', { month: 'short' })
-              .replace('.', '')}
-          </span>
-          <span data-testid="year" className={Styles.year}>
-            {survey.date.getFullYear()}
-          </span>
-        </time>
+        <Calendar date={survey.date} />
         <p data-testid="question">{survey.question}</p>
       </div>
       <footer>Ver Resultado</footer>
     </li>
-  );
-};
+  )
+}
