@@ -16,10 +16,20 @@
     flex: 1;
     padding: 40px;
 
-    h2 {
-      color: $primaryDark;
-      font-size: 20px;
-      font-weight: bold;
+    .titleContainer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      h2 {
+        color: $primaryDark;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .calendarWrap {
+        width: 90px;
+      }
     }
 
     .answersList {
