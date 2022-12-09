@@ -3,7 +3,7 @@ import { LoadSurveyList } from '@/domain/usecases'
 import Footer from '@/presentation/components/footer'
 import Header from '@/presentation/components/header'
 import { useErrorHandler } from '@/presentation/hooks'
-import { Error } from './components/error'
+import { Error } from '@/presentation/components/error'
 import { SurveyItemList } from './components/list'
 import { SurveyContext } from './context'
 import Styles from './survey-list-styles.scss'
@@ -17,6 +17,11 @@ const SurveyList = ({ loadSurveyList }: Props) => {
   const [surveys, setSurveys] = useState<LoadSurveyList.Model[]>([])
   const [error, setError] = useState('')
   const [reload, setReload] = useState(false)
+
+  const onReload = () => {
+    setError('')
+    setReload(!reload)
+  }
 
   useEffect(() => {
     loadSurveyList
@@ -35,7 +40,7 @@ const SurveyList = ({ loadSurveyList }: Props) => {
         <SurveyContext.Provider
           value={{ surveys, error, setError, reload, setReload }}
         >
-          {error ? <Error /> : <SurveyItemList />}
+          {error ? <Error error={error} reload={onReload} /> : <SurveyItemList />}
         </SurveyContext.Provider>
       </div>
 
