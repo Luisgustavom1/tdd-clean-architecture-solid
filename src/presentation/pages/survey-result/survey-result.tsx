@@ -14,7 +14,7 @@ export const SurveyResult = () => {
 
       <section className={Styles.contentWrap}>
        {
-        false &&
+        true &&
         <>
           <hgroup className={Styles.titleContainer}>
             <Calendar className={Styles.calendarWrap} date={new Date()} />
