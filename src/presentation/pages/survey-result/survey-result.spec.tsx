@@ -1,21 +1,24 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { SurveyResult } from '@/presentation/pages/survey-result/survey-result'
 import { ApiContext } from '@/presentation/contexts'
-import { mockAccountModel } from '@/domain/test'
+import { LoadSurveyResultSpy, mockAccountModel } from '@/domain/test'
 
 const makeSut = () => {
-  const setCurrentAccount = jest.fn()
+  const loadSurveyResultSpy = new LoadSurveyResultSpy()
   render(
     <ApiContext.Provider
       value={{
-        setCurrentAccount,
+        setCurrentAccount: jest.fn(),
         getCurrentAccount: () => mockAccountModel()
       }}
     >
-      <SurveyResult />
+      <SurveyResult loadSurveyResult={loadSurveyResultSpy} />
     </ApiContext.Provider>
   )
+  return {
+    loadSurveyResultSpy
+  }
 }
 
 describe('<SurveyResult />', () => {
@@ -25,5 +28,13 @@ describe('<SurveyResult />', () => {
     expect(surveyList.childElementCount).toBe(0)
     expect(screen.queryByTestId('loading')).toBeNull()
     expect(screen.queryByTestId('error')).toBeNull()
+  })
+
+  it('Should call LoadSurveyResult', async () => {
+    const { loadSurveyResultSpy } = makeSut()
+    await waitFor(() => {
+      screen.getByTestId('survey-result')
+    })
+    expect(loadSurveyResultSpy.callsCount).toBe(1)
   })
 })
