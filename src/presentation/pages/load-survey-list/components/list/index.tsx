@@ -1,10 +1,13 @@
-import React, { useContext } from 'react'
-import { SurveyContext } from '@/presentation/pages/load-survey-list/context'
-import { SurveyItemEmpty } from '../item-empty'
-import { SurveyItem } from '../item'
+import React from 'react'
+import { SurveyItemEmpty } from '@/presentation/pages/load-survey-list/components/item-empty'
+import { SurveyItem } from '@/presentation/pages/load-survey-list/components/item'
+import { LoadSurveyList } from '@/domain/usecases'
 
-export const SurveyItemList = () => {
-  const { surveys } = useContext(SurveyContext)
+interface ISuveryListProps {
+  surveys: LoadSurveyList.Model[]
+}
+
+export const SurveyItemList = ({ surveys }: ISuveryListProps) => {
   return (
     <ul data-testid="survey-list">
       {surveys.length > 0

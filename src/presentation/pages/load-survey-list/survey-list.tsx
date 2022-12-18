@@ -4,8 +4,7 @@ import Footer from '@/presentation/components/footer'
 import Header from '@/presentation/components/header'
 import { useErrorHandler } from '@/presentation/hooks'
 import { Error } from '@/presentation/components/error'
-import { SurveyItemList } from './components/list'
-import { SurveyContext } from './context'
+import { SurveyItemList } from '@/presentation/pages/load-survey-list/components/list'
 import Styles from './survey-list-styles.scss'
 
 type Props = {
@@ -37,11 +36,7 @@ const SurveyList = ({ loadSurveyList }: Props) => {
 
       <div className={Styles.contentWrap}>
         <h2>Enquetes</h2>
-        <SurveyContext.Provider
-          value={{ surveys, error, setError, reload, setReload }}
-        >
-          {error ? <Error error={error} reload={onReload} /> : <SurveyItemList />}
-        </SurveyContext.Provider>
+          {error ? <Error error={error} reload={onReload} /> : <SurveyItemList surveys={surveys} />}
       </div>
 
       <Footer />
