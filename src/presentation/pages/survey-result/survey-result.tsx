@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import FlipMove from 'react-flip-move'
 import Button from '@/presentation/components/button'
 import Footer from '@/presentation/components/footer'
@@ -8,9 +8,18 @@ import { Loading } from '@/presentation/components/loading'
 import { Calendar } from '@/presentation/components/calendar'
 import { useSurveyResult } from '@/presentation/hooks/use-survey-resuult'
 import { Error } from '@/presentation/components/error'
+import { LoadSurveyResult } from '@/domain/usecases'
 
-export const SurveyResult = () => {
+interface ISurveyResultProps {
+  loadSurveyResult: LoadSurveyResult
+}
+
+export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
   const { surveys, error, isLoading } = useSurveyResult()
+
+  useEffect(() => {
+    loadSurveyResult.load().then().catch()
+  })
   return (
     <div className={Styles.surveyResultWrap}>
       <Header />
