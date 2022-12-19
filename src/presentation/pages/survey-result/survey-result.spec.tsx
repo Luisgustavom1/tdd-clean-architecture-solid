@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { SurveyResult } from '@/presentation/pages/survey-result/survey-result'
 import { ApiContext } from '@/presentation/contexts'
 import { LoadSurveyResultSpy, mockAccountModel, mockSurveyResultModel } from '@/domain/test'
@@ -95,5 +95,19 @@ describe('<SurveyResult />', () => {
     await waitFor(() => screen.getByTestId('survey-result'))
     expect(setCurrentAccount).toHaveBeenCalledWith(undefined)
     expect(history.location.pathname).toBe('/login')
+  })
+
+  it('Should call loadSurveyResult on reload', async () => {
+    const loadSurveyListSpy = new LoadSurveyResultSpy()
+    jest
+      .spyOn(loadSurveyListSpy, 'load')
+      .mockRejectedValueOnce(new UnexpectedError())
+    makeSut(loadSurveyListSpy)
+    await waitFor(() => screen.getByTestId('survey-result-container'))
+    fireEvent.click(
+      await screen.findByRole('button', { name: /tentar novamente/i })
+    )
+    expect(loadSurveyListSpy.callsCount).toBe(1)
+    await waitFor(() => screen.getByTestId('survey-result-container'))
   })
 })
