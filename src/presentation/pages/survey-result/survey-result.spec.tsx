@@ -3,10 +3,9 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import { SurveyResult } from '@/presentation/pages/survey-result/survey-result'
 import { ApiContext } from '@/presentation/contexts'
 import { LoadSurveyResultSpy, mockAccountModel, mockSurveyResultModel } from '@/domain/test'
+import { UnexpectedError } from '@/domain/errors'
 
-const makeSut = (surveyResult = mockSurveyResultModel()) => {
-  const loadSurveyResultSpy = new LoadSurveyResultSpy()
-  loadSurveyResultSpy.surveyResult = surveyResult
+const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()) => {
   render(
     <ApiContext.Provider
       value={{
@@ -24,11 +23,9 @@ const makeSut = (surveyResult = mockSurveyResultModel()) => {
 
 describe('<SurveyResult />', () => {
   it('Should present 4 empty items on start', async () => {
-    makeSut()
+    makeSut({ load: jest.fn().mockResolvedValueOnce(null) } as unknown as LoadSurveyResultSpy)
     const surveyList = screen.getByTestId('survey-result')
-    await waitFor(() => surveyList)
     expect(surveyList.childElementCount).toBe(0)
-    expect(screen.queryByTestId('loading')).toBeNull()
     expect(screen.queryByTestId('error')).toBeNull()
   })
 
@@ -41,11 +38,13 @@ describe('<SurveyResult />', () => {
   })
 
   it('Should preset SurveyResult data on success', async () => {
+    const loadSurveyResultSpy = new LoadSurveyResultSpy()
     const surveyResult = Object.assign(mockSurveyResultModel(), {
       date: new Date('2022-01-10T00:00:00')
     })
+    loadSurveyResultSpy.surveyResult = surveyResult
     await act(() => {
-      makeSut(surveyResult)
+      makeSut(loadSurveyResultSpy)
     })
     expect(screen.getByTestId('day').textContent).toBe('10')
     expect(screen.getByTestId('month').textContent).toBe('jan')
@@ -65,5 +64,17 @@ describe('<SurveyResult />', () => {
     const percents = screen.queryAllByTestId('percent')
     expect(percents[0].textContent).toBe(`${surveyResult.answers[0].percent}%`)
     expect(percents[1].textContent).toBe(`${surveyResult.answers[1].percent}%`)
+  })
+
+  it('Should render render error on UnexpectedError', async () => {
+    const loadSurveyResultSpy = new LoadSurveyResultSpy()
+    const error = new UnexpectedError()
+    jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error)
+    makeSut(loadSurveyResultSpy)
+    expect((await screen.findByTestId('error')).textContent).toBe(
+      error.message
+    )
+    expect(screen.queryByTestId('loading')).toBeNull()
+    expect(screen.queryByTestId('question')).toBeNull()
   })
 })

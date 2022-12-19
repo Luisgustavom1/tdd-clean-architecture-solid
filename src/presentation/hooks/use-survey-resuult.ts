@@ -28,7 +28,8 @@ export function useSurveyResult (loadSurveyResult: LoadSurveyResult) {
     loadSurveyResult.load().then((newSurveyResult) => updateSurveyResult({
       data: newSurveyResult
     })).catch((error) => updateSurveyResult({
-      error: error.message
+      error: error.message,
+      data: null
     })).finally(() => updateSurveyResult({
       isLoading: false
     }))
