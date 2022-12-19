@@ -9,6 +9,7 @@ import { Calendar } from '@/presentation/components/calendar'
 import { useSurveyResult } from '@/presentation/hooks/use-survey-resuult'
 import { Error } from '@/presentation/components/error'
 import { LoadSurveyResult } from '@/domain/usecases'
+import { useHistory } from 'react-router-dom'
 
 interface ISurveyResultProps {
   loadSurveyResult: LoadSurveyResult
@@ -16,6 +17,7 @@ interface ISurveyResultProps {
 
 export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
   const { data, error, isLoading } = useSurveyResult(loadSurveyResult)
+  const { goBack } = useHistory()
   return (
     <div data-testid='survey-result-container' className={Styles.surveyResultWrap}>
       <Header />
@@ -39,7 +41,7 @@ export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
                 ))
               }
             </FlipMove>
-            <Button variant='filled'>Voltar</Button>
+            <Button variant='filled' data-testid='back-button' onClick={goBack}>Voltar</Button>
           </>
        }
       </section>
