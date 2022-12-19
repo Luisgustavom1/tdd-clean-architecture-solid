@@ -1,5 +1,6 @@
 import { LoadSurveyResult } from '@/domain/usecases'
 import { useEffect, useState } from 'react'
+import { useErrorHandler } from './use-error-handler'
 
 interface ISurveyResult {
   data: LoadSurveyResult.Model | null
@@ -8,6 +9,12 @@ interface ISurveyResult {
 }
 
 export function useSurveyResult (loadSurveyResult: LoadSurveyResult) {
+  const handleError = useErrorHandler((error) => {
+    updateSurveyResult({
+      error: error.message,
+      data: null
+    })
+  })
   const [surveyResult, setSurveyResult] = useState<ISurveyResult>({
     data: null as LoadSurveyResult.Model,
     isLoading: false,
@@ -27,10 +34,7 @@ export function useSurveyResult (loadSurveyResult: LoadSurveyResult) {
     })
     loadSurveyResult.load().then((newSurveyResult) => updateSurveyResult({
       data: newSurveyResult
-    })).catch((error) => updateSurveyResult({
-      error: error.message,
-      data: null
-    })).finally(() => updateSurveyResult({
+    })).catch(handleError).finally(() => updateSurveyResult({
       isLoading: false
     }))
   }, [])
