@@ -32,6 +32,12 @@
     }
   }
 
+  a {
+    color: $white;
+    text-transform: lowercase;
+    text-decoration: none;
+  }
+
   footer {
     background-color: $primary;
     color: $white;
