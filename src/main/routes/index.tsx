@@ -10,8 +10,8 @@ import {
   setCurrentAccountAdapter
 } from '@/main/adapters/current-account-adapter'
 import { PrivateRoute } from '@/presentation/components/private-route/private-route'
-import { makeSurveyList } from '../factories/pages/survey-list/survey-list-factory'
-import { SurveyResult } from '@/presentation/pages/survey-result/survey-result'
+import { makeSurveyList } from '@/main/factories/pages/survey-list/survey-list-factory'
+import { makeSurveyResult } from '@/main/factories/pages/survey-result'
 
 const Router = () => {
   return (
@@ -26,7 +26,7 @@ const Router = () => {
           <Route path="/login" exact component={makeLogin} />
           <Route path="/signup" exact component={makeSignup} />
           <PrivateRoute path="/" exact component={makeSurveyList} />
-          <Route path='/surveys' exact component={SurveyResult} />
+          <Route path='/surveys/:id' component={makeSurveyResult} />
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>
