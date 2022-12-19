@@ -8,7 +8,7 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 
 const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()) => {
-  const history = createMemoryHistory({ initialEntries: ['/'] })
+  const history = createMemoryHistory({ initialEntries: ['/', '/surveys/any_id'], initialIndex: 1 })
   const setCurrentAccount = jest.fn()
   render(
     <ApiContext.Provider
@@ -109,5 +109,11 @@ describe('<SurveyResult />', () => {
     )
     expect(loadSurveyListSpy.callsCount).toBe(1)
     await waitFor(() => screen.getByTestId('survey-result-container'))
+  })
+
+  it.only('Should goto SurveyList on back button click', async () => {
+    const { history } = makeSut()
+    fireEvent.click(await screen.findByTestId('back-button'))
+    expect(history.location.pathname).toBe('/')
   })
 })
