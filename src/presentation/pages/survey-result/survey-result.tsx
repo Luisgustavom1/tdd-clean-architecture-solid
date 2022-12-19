@@ -40,11 +40,11 @@ export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
               }
             </FlipMove>
             <Button variant='filled'>Voltar</Button>
-            {isLoading && <Loading />}
-            {error && <Error error={error} reload={() => ({})} />}
           </>
        }
       </section>
+      {isLoading && <Loading />}
+      {error && <Error error={error} reload={() => ({})} />}
 
       <Footer />
     </div>
