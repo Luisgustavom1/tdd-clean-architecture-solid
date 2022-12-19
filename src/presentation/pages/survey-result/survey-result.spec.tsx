@@ -3,21 +3,29 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import { SurveyResult } from '@/presentation/pages/survey-result/survey-result'
 import { ApiContext } from '@/presentation/contexts'
 import { LoadSurveyResultSpy, mockAccountModel, mockSurveyResultModel } from '@/domain/test'
-import { UnexpectedError } from '@/domain/errors'
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
 
 const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()) => {
+  const history = createMemoryHistory({ initialEntries: ['/'] })
+  const setCurrentAccount = jest.fn()
   render(
     <ApiContext.Provider
       value={{
-        setCurrentAccount: jest.fn(),
+        setCurrentAccount,
         getCurrentAccount: () => mockAccountModel()
       }}
     >
-      <SurveyResult loadSurveyResult={loadSurveyResultSpy} />
+      <Router history={history}>
+        <SurveyResult loadSurveyResult={loadSurveyResultSpy} />
+      </Router>
     </ApiContext.Provider>
   )
   return {
-    loadSurveyResultSpy
+    loadSurveyResultSpy,
+    setCurrentAccount,
+    history
   }
 }
 
@@ -76,5 +84,16 @@ describe('<SurveyResult />', () => {
     )
     expect(screen.queryByTestId('loading')).toBeNull()
     expect(screen.queryByTestId('question')).toBeNull()
+  })
+
+  it('Should logout on accessDeniedError', async () => {
+    const loadSurveyListSpy = new LoadSurveyResultSpy()
+    jest
+      .spyOn(loadSurveyListSpy, 'load')
+      .mockRejectedValueOnce(new AccessDeniedError())
+    const { setCurrentAccount, history } = makeSut(loadSurveyListSpy)
+    await waitFor(() => screen.getByTestId('survey-result'))
+    expect(setCurrentAccount).toHaveBeenCalledWith(undefined)
+    expect(history.location.pathname).toBe('/login')
   })
 })
