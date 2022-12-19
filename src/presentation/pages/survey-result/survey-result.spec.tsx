@@ -111,7 +111,7 @@ describe('<SurveyResult />', () => {
     await waitFor(() => screen.getByTestId('survey-result-container'))
   })
 
-  it.only('Should goto SurveyList on back button click', async () => {
+  it('Should goto SurveyList on back button click', async () => {
     const { history } = makeSut()
     fireEvent.click(await screen.findByTestId('back-button'))
     expect(history.location.pathname).toBe('/')
