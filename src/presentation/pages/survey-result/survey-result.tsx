@@ -14,7 +14,6 @@ interface ISurveyResultProps {
 
 export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
   const { data, error, isLoading, reload } = useSurveyResult(loadSurveyResult)
-  console.log(data)
   return (
     <div data-testid='survey-result-container' className={Styles.surveyResultWrap}>
       <Header />
