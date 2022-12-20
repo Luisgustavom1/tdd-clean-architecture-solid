@@ -8,7 +8,6 @@ import { createMemoryHistory } from 'history'
 
 const makeSut = (survey = mockSurveyModel()) => {
   const history = createMemoryHistory({ initialEntries: ['/'] })
-  console.log(history)
   render(
     <Router history={history}>
       <SurveyItem survey={survey} />

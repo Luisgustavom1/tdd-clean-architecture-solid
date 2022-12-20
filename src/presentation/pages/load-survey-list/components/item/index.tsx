@@ -2,7 +2,6 @@ import { LoadSurveyList } from '@/domain/usecases'
 import { Calendar } from '@/presentation/components/calendar'
 import { Icon, IconName } from '@/presentation/components/icon'
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Styles from './list-item.scss'
 
 type Props = {
@@ -20,9 +19,11 @@ export const SurveyItem = ({ survey }: Props) => {
         <Calendar date={survey.date} />
         <p data-testid="question">{survey.question}</p>
       </div>
-      <Link to={`/surveys/${survey.id}`}>
-        <footer>Ver Resultado</footer>
-      </Link>
+      <footer>
+        <a href={`/surveys/${survey.id}`}>
+          Ver Resultado
+        </a>
+      </footer>
     </li>
   )
 }
