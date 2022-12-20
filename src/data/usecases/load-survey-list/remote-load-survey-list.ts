@@ -1,4 +1,5 @@
 import { HttpGetClient, HttpStatusCode } from '@/data/protocols/http'
+import { mockSurveyListModel } from '@/data/test'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 import { LoadSurveyList } from '@/domain/usecases'
 
@@ -9,9 +10,13 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
   ) {}
 
   async loadAll (): Promise<LoadSurveyList.Model[]> {
-    const httpResponse = await this.httpGetClient.get({
-      url: this.url
-    })
+    // const httpResponse = await this.httpGetClient.get({
+    //   url: this.url
+    // })
+    const httpResponse = {
+      body: mockSurveyListModel(),
+      statusCode: 200
+    }
     const remoteSurveys = httpResponse.body || []
 
     switch (httpResponse.statusCode) {
