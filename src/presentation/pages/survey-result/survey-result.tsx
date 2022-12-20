@@ -13,7 +13,8 @@ interface ISurveyResultProps {
 }
 
 export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
-  const { data, error, isLoading } = useSurveyResult(loadSurveyResult)
+  const { data, error, isLoading, reload } = useSurveyResult(loadSurveyResult)
+  console.log(data)
   return (
     <div data-testid='survey-result-container' className={Styles.surveyResultWrap}>
       <Header />
@@ -22,7 +23,7 @@ export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
        {data && <SurveyResultData surveyResult={data}/>}
       </section>
       {isLoading && <Loading />}
-      {error && <Error error={error} reload={async () => loadSurveyResult.load()} />}
+      {error && <Error error={error} reload={reload} />}
 
       <Footer />
     </div>

@@ -28,16 +28,24 @@ export function useSurveyResult (loadSurveyResult: LoadSurveyResult) {
     }))
   }
 
-  useEffect(() => {
+  function getSurveyResult () {
     updateSurveyResult({
       isLoading: true
     })
     loadSurveyResult.load().then((newSurveyResult) => updateSurveyResult({
-      data: newSurveyResult
+      data: newSurveyResult,
+      error: null
     })).catch(handleError).finally(() => updateSurveyResult({
       isLoading: false
     }))
+  }
+
+  useEffect(() => {
+    getSurveyResult()
   }, [])
 
-  return surveyResult
+  return {
+    ...surveyResult,
+    reload: getSurveyResult
+  }
 }
