@@ -26,7 +26,7 @@ const Router = () => {
           <Route path="/login" exact component={makeLogin} />
           <Route path="/signup" exact component={makeSignup} />
           <PrivateRoute path="/" exact component={makeSurveyList} />
-          <Route path='/surveys/:id' component={makeSurveyResult} />
+          <PrivateRoute path='/surveys/:id' component={makeSurveyResult} />
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>
