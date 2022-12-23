@@ -1,51 +1,58 @@
 import { faker } from '@faker-js/faker'
 
 import { RemoteAddAccount } from './remote-add-account'
-import { HttpPostClientSpy } from '@/data/test'
+import { HttpClientSpy } from '@/data/test'
 import { UnexpectedError } from '@/domain/errors'
-import { HttpStatusCode } from '@/data/protocols/http'
-import { Authentication } from '@/domain/usecases/authentication'
+import { HttpClient } from '@/data/protocols/http'
 import { mockAddAccount, mockAddAccountModel } from '@/domain/test/mock-add-account'
 
 type SutTypes = {
   sut: RemoteAddAccount
-  httpPostClientSpy: HttpPostClientSpy<Authentication.Params, RemoteAddAccount.Model>
+  httpClient: HttpClientSpy<RemoteAddAccount.Model>
 }
 
 const makeSut = (url: string = faker.internet.url()): SutTypes => {
-  const httpPostClientSpy = new HttpPostClientSpy<Authentication.Params, RemoteAddAccount.Model>()
-  const sut = new RemoteAddAccount(url, httpPostClientSpy)
+  const httpClient = new HttpClientSpy<RemoteAddAccount.Model>()
+  const sut = new RemoteAddAccount(url, httpClient)
 
   return {
     sut,
-    httpPostClientSpy
+    httpClient
   }
 }
 
 describe('Remote Add Account', () => {
-  test('Should call HttPostClient with correct URL', async () => {
-    const url = faker.internet.url()
-    const { sut, httpPostClientSpy } = makeSut(url)
+  test('Should call HttClient with correct METHOD', async () => {
+    const { sut, httpClient } = makeSut()
 
     await sut.add(mockAddAccount())
 
-    expect(httpPostClientSpy.url).toBe(url)
+    expect(httpClient.method).toBe('POST')
   })
 
-  test('Should call HttPostClient with correct body', async () => {
+  test('Should call HttClient with correct URL', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClient } = makeSut(url)
+
+    await sut.add(mockAddAccount())
+
+    expect(httpClient.url).toBe(url)
+  })
+
+  test('Should call HttClient with correct body', async () => {
     const url = faker.internet.url()
     const addAccountParams = mockAddAccount()
-    const { sut, httpPostClientSpy } = makeSut(url)
+    const { sut, httpClient } = makeSut(url)
 
     await sut.add(addAccountParams)
 
-    expect(httpPostClientSpy.body).toEqual(addAccountParams)
+    expect(httpClient.body).toEqual(addAccountParams)
   })
 
   test('Should throw InvalidCredentialsError if HttpPostClient returns 401', async () => {
-    const { sut, httpPostClientSpy } = makeSut()
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.unathorized
+    const { sut, httpClient } = makeSut()
+    httpClient.response = {
+      statusCode: HttpClient.StatusCode.unauthorized
     }
 
     const promiseResult = sut.add(mockAddAccount())
@@ -54,9 +61,9 @@ describe('Remote Add Account', () => {
   })
 
   test('Should throw UnexpectedError if HttpPostClient returns 400', async () => {
-    const { sut, httpPostClientSpy } = makeSut()
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.badRequest
+    const { sut, httpClient } = makeSut()
+    httpClient.response = {
+      statusCode: HttpClient.StatusCode.badRequest
     }
 
     const promiseResult = sut.add(mockAddAccount())
@@ -65,9 +72,9 @@ describe('Remote Add Account', () => {
   })
 
   test('Should throw UnexpectedError if HttpPostClient returns 500', async () => {
-    const { sut, httpPostClientSpy } = makeSut()
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.serverError
+    const { sut, httpClient } = makeSut()
+    httpClient.response = {
+      statusCode: HttpClient.StatusCode.serverError
     }
 
     const promiseResult = sut.add(mockAddAccount())
@@ -76,9 +83,9 @@ describe('Remote Add Account', () => {
   })
 
   test('Should throw UnexpectedError if HttpPostClient returns 404', async () => {
-    const { sut, httpPostClientSpy } = makeSut()
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.notFound
+    const { sut, httpClient } = makeSut()
+    httpClient.response = {
+      statusCode: HttpClient.StatusCode.notFound
     }
 
     const promiseResult = sut.add(mockAddAccount())
@@ -87,10 +94,10 @@ describe('Remote Add Account', () => {
   })
 
   test('Should an AddAccount.Model if HttpPostClient returns 200', async () => {
-    const { sut, httpPostClientSpy } = makeSut()
+    const { sut, httpClient } = makeSut()
     const httpResult = mockAddAccountModel()
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.ok,
+    httpClient.response = {
+      statusCode: HttpClient.StatusCode.ok,
       body: httpResult
     }
 

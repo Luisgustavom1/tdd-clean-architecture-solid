@@ -1,5 +1,5 @@
 import { mockSurveyModel } from '@/domain/test'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { SurveyItem } from '.'
 import React from 'react'
 import { IconName } from '@/presentation/components/icon'
@@ -49,10 +49,9 @@ describe('SurveyItem component', () => {
     expect(screen.getByTestId('question').textContent).toBe(survey.question)
   })
 
-  it('Should go to SurveyResult', () => {
+  it('Should go to SurveyResult', async () => {
     const survey = mockSurveyModel()
-    const { history } = makeSut(survey)
-    fireEvent.click(screen.getByText(/ver resultado/i))
-    expect(history.location.pathname).toBe(`/surveys/${survey.id}`)
+    makeSut(survey)
+    expect(screen.getByText(/ver resultado/i).getAttribute('href')).toBe(`/surveys/${survey.id}`)
   })
 })

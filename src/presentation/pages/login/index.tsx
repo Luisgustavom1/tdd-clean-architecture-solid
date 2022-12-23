@@ -53,6 +53,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
       history.replace('/')
     } catch (error) {
       setMainError(error.message)
+    } finally {
       setIsLoading(false)
     }
   }
