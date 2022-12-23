@@ -23,7 +23,7 @@ describe('SurveyList', () => {
     cy.getByTestId('reload').click()
     cy.get('li:not(:empty)').should('have.length', 2)
   })
-  it('Should preset error on UnexpectedError', () => {
+  it('Should preset error on AccessDeniedError', () => {
     mockAccessDeniedError()
     cy.visit('')
     Helper.testUrl('/login')
