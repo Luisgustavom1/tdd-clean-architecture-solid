@@ -2,7 +2,7 @@ import React from 'react'
 import { faker } from '@faker-js/faker'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import { fireEvent, render, waitFor, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import Login from '.'
 import { InvalidCredentialsError } from '@/domain/errors'
 import { Helper, ValidationStub, AuthenticationSpy } from '@/presentation/test'
@@ -51,7 +51,6 @@ const simulateValidSubmit = async (
   await act(async () => {
     fireEvent.submit(form)
   })
-  await waitFor(() => form)
 }
 
 describe('<Login />', () => {
@@ -104,7 +103,9 @@ describe('<Login />', () => {
 
   it('Should show spinner on submit', async () => {
     makeSut()
-    await simulateValidSubmit()
+    Helper.populateField('password', faker.internet.password())
+    Helper.populateField('email', faker.internet.email())
+    fireEvent.submit(screen.getByTestId('form'))
     Helper.testElementExists('spinner')
   })
 
@@ -121,8 +122,10 @@ describe('<Login />', () => {
 
   it('Should call Authentication only once', async () => {
     const { authenticationSpy } = makeSut()
-    await simulateValidSubmit()
-    await simulateValidSubmit()
+    Helper.populateField('password', faker.internet.password())
+    Helper.populateField('email', faker.internet.email())
+    fireEvent.click(screen.getByRole('button', { name: /entrar/i }))
+    fireEvent.click(screen.getByRole('button', { name: /entrar/i }))
     expect(authenticationSpy.callsCount).toBe(1)
   })
 
@@ -144,7 +147,7 @@ describe('<Login />', () => {
     Helper.testChildCount('status-wrap', 1)
   })
 
-  it('Should call SaveAcessToken on success', async () => {
+  it('Should call SaveAccessToken on success', async () => {
     const { authenticationSpy, setCurrentAccountMock } = makeSut()
     await simulateValidSubmit()
     expect(setCurrentAccountMock).toHaveBeenCalledWith(
