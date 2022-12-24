@@ -22,31 +22,14 @@ const makeSut = (url: string = faker.internet.url()): SutTypes => {
 }
 
 describe('Remote Add Account', () => {
-  test('Should call HttClient with correct METHOD', async () => {
-    const { sut, httpClient } = makeSut()
-
-    await sut.add(mockAddAccount())
-
+  test('Should call HttClient with correct METHOD, URL and BODY', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClient } = makeSut(url)
+    const addAccount = mockAddAccount()
+    await sut.add(addAccount)
     expect(httpClient.method).toBe('POST')
-  })
-
-  test('Should call HttClient with correct URL', async () => {
-    const url = faker.internet.url()
-    const { sut, httpClient } = makeSut(url)
-
-    await sut.add(mockAddAccount())
-
     expect(httpClient.url).toBe(url)
-  })
-
-  test('Should call HttClient with correct body', async () => {
-    const url = faker.internet.url()
-    const addAccountParams = mockAddAccount()
-    const { sut, httpClient } = makeSut(url)
-
-    await sut.add(addAccountParams)
-
-    expect(httpClient.body).toEqual(addAccountParams)
+    expect(httpClient.body).toBe(addAccount)
   })
 
   test('Should throw InvalidCredentialsError if HttpPostClient returns 401', async () => {
