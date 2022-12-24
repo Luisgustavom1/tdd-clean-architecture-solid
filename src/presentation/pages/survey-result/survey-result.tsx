@@ -5,22 +5,30 @@ import Styles from './survey-result-styles.scss'
 import { Loading } from '@/presentation/components/loading'
 import { useSurveyResult } from '@/presentation/hooks/use-survey-result'
 import { Error } from '@/presentation/components/error'
-import { LoadSurveyResult } from '@/domain/usecases'
-import { SurveyResultData } from './components'
+import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases'
+import { SurveyResultContext, SurveyResultData } from './components'
 
 interface ISurveyResultProps {
   loadSurveyResult: LoadSurveyResult
+  saveSurveyResult: SaveSurveyResult
 }
 
-export const SurveyResult = ({ loadSurveyResult }: ISurveyResultProps) => {
-  const { data, error, isLoading, reload } = useSurveyResult(loadSurveyResult)
+export const SurveyResult = ({ loadSurveyResult, saveSurveyResult }: ISurveyResultProps) => {
+  const { data, error, isLoading, reload, saveAnswer } = useSurveyResult(loadSurveyResult, saveSurveyResult)
+
+  const onAnswer = (answer: string) => {
+    saveAnswer(answer)
+  }
+
   return (
     <div data-testid='survey-result-container' className={Styles.surveyResultWrap}>
       <Header />
 
-      <section data-testid='survey-result' className={Styles.contentWrap}>
-       {data && <SurveyResultData surveyResult={data}/>}
-      </section>
+      <SurveyResultContext.Provider value={{ onAnswer }}>
+        <section data-testid='survey-result' className={Styles.contentWrap}>
+        {data && <SurveyResultData surveyResult={data}/>}
+        </section>
+      </SurveyResultContext.Provider>
       {isLoading && <Loading />}
       {error && <Error error={error} reload={reload} />}
 

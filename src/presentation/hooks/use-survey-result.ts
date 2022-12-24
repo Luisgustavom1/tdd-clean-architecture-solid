@@ -1,4 +1,4 @@
-import { LoadSurveyResult } from '@/domain/usecases'
+import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases'
 import { useEffect, useState } from 'react'
 import { useErrorHandler } from './use-error-handler'
 
@@ -8,7 +8,7 @@ interface ISurveyResult {
   error: string
 }
 
-export function useSurveyResult (loadSurveyResult: LoadSurveyResult) {
+export function useSurveyResult (loadSurveyResult: LoadSurveyResult, saveSurveyResult: SaveSurveyResult) {
   const handleError = useErrorHandler((error) => {
     updateSurveyResult({
       error: error.message,
@@ -40,12 +40,24 @@ export function useSurveyResult (loadSurveyResult: LoadSurveyResult) {
     }))
   }
 
+  function saveAnswer (answer: string) {
+    updateSurveyResult({
+      isLoading: true
+    })
+    saveSurveyResult.save({ answer }).then((newSurveyResult) => updateSurveyResult({
+      error: null
+    })).catch(handleError).finally(() => updateSurveyResult({
+      isLoading: false
+    }))
+  }
+
   useEffect(() => {
     getSurveyResult()
   }, [])
 
   return {
     ...surveyResult,
-    reload: getSurveyResult
+    reload: getSurveyResult,
+    saveAnswer
   }
 }
