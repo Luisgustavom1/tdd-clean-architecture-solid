@@ -142,7 +142,11 @@ describe('<SignUp />', () => {
 
   it('Should show spinner on submit', async () => {
     makeSut()
-    await simulateValidSubmit()
+    Helper.populateField('name', faker.internet.email())
+    Helper.populateField('email', faker.word.noun())
+    Helper.populateField('password', faker.internet.password())
+    Helper.populateField('passwordConfirmation', faker.internet.password())
+    fireEvent.submit(screen.getByTestId('submit-form'))
     Helper.testElementExists('spinner')
   })
 
@@ -162,8 +166,12 @@ describe('<SignUp />', () => {
 
   it('Should call AddAccount only once', async () => {
     const { addAccountSpy } = makeSut()
-    await simulateValidSubmit()
-    await simulateValidSubmit()
+    Helper.populateField('name', faker.internet.email())
+    Helper.populateField('email', faker.word.noun())
+    Helper.populateField('password', faker.internet.password())
+    Helper.populateField('passwordConfirmation', faker.internet.password())
+    fireEvent.submit(screen.getByTestId('submit-form'))
+    fireEvent.submit(screen.getByTestId('submit-form'))
     expect(addAccountSpy.callsCount).toBe(1)
   })
 
