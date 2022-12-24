@@ -175,4 +175,38 @@ describe('<SurveyResult />', () => {
     expect(setCurrentAccount).toBeCalledWith(undefined)
     expect(history.location.pathname).toBe('/login')
   })
+
+  it('Should preset SaveSurveyResult data on success', async () => {
+    const saveSurveyResultSpy = new SaveSurveyResultSpy()
+    const surveyResult = Object.assign(mockSurveyResultModel(), {
+      date: new Date('2018-02-20T00:00:00')
+    })
+    saveSurveyResultSpy.surveyResult = surveyResult
+    await act(() => {
+      makeSut({ saveSurveyResultSpy })
+    })
+    const answersWrap = screen.queryAllByTestId('answer-wrap')
+    fireEvent.click(answersWrap[1])
+    await act(async () => {
+      screen.getByTestId('survey-result')
+    })
+    expect(screen.getByTestId('day').textContent).toBe('20')
+    expect(screen.getByTestId('month').textContent).toBe('fev')
+    expect(screen.getByTestId('year').textContent).toBe('2018')
+    expect(screen.getByTestId('question').textContent).toBe(surveyResult.question)
+    expect(screen.getByTestId('answers').childElementCount).toBe(surveyResult.answers.length)
+    expect(answersWrap[0].getAttribute('class').includes('active')).toBeTruthy()
+    expect(answersWrap[1].getAttribute('class').includes('active')).toBeFalsy()
+    const images = screen.queryAllByTestId('image')
+    expect(images[0].getAttribute('src')).toBe(surveyResult.answers[0].image)
+    expect(images[0].getAttribute('alt')).toBe(surveyResult.answers[0].answer)
+    expect(images[1]).toBeFalsy()
+    const answers = screen.queryAllByTestId('answer')
+    expect(answers[0].textContent).toBe(surveyResult.answers[0].answer)
+    expect(answers[1].textContent).toBe(surveyResult.answers[1].answer)
+    const percents = screen.queryAllByTestId('percent')
+    expect(percents[0].textContent).toBe(`${surveyResult.answers[0].percent}%`)
+    expect(percents[1].textContent).toBe(`${surveyResult.answers[1].percent}%`)
+    expect(screen.queryByTestId('loading')).toBeNull()
+  })
 })
