@@ -44,9 +44,14 @@ export function useSurveyResult (loadSurveyResult: LoadSurveyResult, saveSurveyR
     updateSurveyResult({
       isLoading: true
     })
-    saveSurveyResult.save({ answer }).then((newSurveyResult) => updateSurveyResult({
-      error: null
-    })).catch(handleError).finally(() => updateSurveyResult({
+    saveSurveyResult.save({ answer }).then((newSurveyResult) => {
+      console.log(newSurveyResult)
+
+      updateSurveyResult({
+        data: newSurveyResult,
+        error: null
+      })
+    }).catch(handleError).finally(() => updateSurveyResult({
       isLoading: false
     }))
   }
