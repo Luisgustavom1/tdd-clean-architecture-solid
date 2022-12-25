@@ -17,6 +17,7 @@ export const SurveyResult = ({ loadSurveyResult, saveSurveyResult }: ISurveyResu
   const { data, error, isLoading, reload, saveAnswer } = useSurveyResult(loadSurveyResult, saveSurveyResult)
 
   const onAnswer = (answer: string) => {
+    if (isLoading) return
     saveAnswer(answer)
   }
 
