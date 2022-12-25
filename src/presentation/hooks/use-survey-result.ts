@@ -45,8 +45,6 @@ export function useSurveyResult (loadSurveyResult: LoadSurveyResult, saveSurveyR
       isLoading: true
     })
     saveSurveyResult.save({ answer }).then((newSurveyResult) => {
-      console.log(newSurveyResult)
-
       updateSurveyResult({
         data: newSurveyResult,
         error: null
