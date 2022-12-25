@@ -7,6 +7,7 @@ describe('SurveyResult', () => {
   describe('Load', () => {
     const mockUnexpectedError = (): void => Http.mockServerError(/surveys/, 'GET')
     const mockAccessDeniedError = (): void => Http.mockForbiddenError(/surveys/, 'GET')
+
     beforeEach(() => {
       cy.fixture('account').then(account => {
         Helper.setLocalStorageItem('account', account)
@@ -58,7 +59,8 @@ describe('SurveyResult', () => {
     })
   })
   describe('Save', () => {
-    const mockUnexpectedError = (): void => Http.mockServerError(/surveys/, 'GET')
+    const mockUnexpectedError = (): void => Http.mockServerError(/surveys/, 'PUT')
+    const mockAccessDeniedError = (): void => Http.mockForbiddenError(/surveys/, 'PUT')
 
     beforeEach(() => {
       cy.fixture('account').then(account => {
@@ -68,9 +70,14 @@ describe('SurveyResult', () => {
       cy.visit('/surveys/any_id')
     })
     it('Should present error on UnexpectedError', () => {
-      cy.get('li:nth-child(2)').click()
       mockUnexpectedError()
+      cy.get('li:nth-child(2)').click()
       cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em instantes')
+    })
+    it('Should preset error on AccessDeniedError', () => {
+      mockAccessDeniedError()
+      cy.get('li:nth-child(2)').click()
+      Helper.testUrl('/login')
     })
   })
 })
