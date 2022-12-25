@@ -209,4 +209,18 @@ describe('<SurveyResult />', () => {
     expect(percents[1].textContent).toBe(`${surveyResult.answers[1].percent}%`)
     expect(screen.queryByTestId('loading')).toBeNull()
   })
+
+  it('Should preset SaveSurveyResult data on success', async () => {
+    const saveSurveyResultSpy = new SaveSurveyResultSpy()
+    await act(() => {
+      makeSut({ saveSurveyResultSpy })
+    })
+    const answersWrap = screen.queryAllByTestId('answer-wrap')
+    fireEvent.click(answersWrap[1])
+    fireEvent.click(answersWrap[1])
+    await act(async () => {
+      screen.getByTestId('survey-result')
+    })
+    expect(saveSurveyResultSpy.callsCount).toBe(1)
+  })
 })
