@@ -8,7 +8,7 @@
     "dev:base": "webpack-dev-server --config webpack.dev.js",
     "dev": "pnpm dev:base --open",
     "build": "webpack --config webpack.prod.js",
-    "test": "jest --passWithNoTests --no-cache --runInBand",
+    "test": "jest --passWithNoTests --no-cache --runInBand --coverage",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
