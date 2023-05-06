@@ -13,4 +13,4 @@ cd ./home/ec2-user/app
 pnpm install
 pnpm build
 
-node home/ec2-user/app/index.js
+node /home/ec2-user/app/index.js
