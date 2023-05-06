@@ -3,7 +3,10 @@ os: linux
 files:
   - source: /
     destination: /home/ec2-user/app
+file_exists_behavior: OVERWRITE
 hooks:
+  BeforeInstall:
+    - location: scripts/BeforeInstallHook.sh
   AfterInstall:
     - location: scripts/AfterInstallHook.sh
       timeout: 300
